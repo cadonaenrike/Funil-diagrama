@@ -90,6 +90,12 @@ export function Timer() {
             type="source"
             className="-right-1 w-3 h-3"
           />
+          <Handle
+            id="left"
+            position={Position.Left}
+            type="source"
+            className="-left-1 w-3 h-3"
+          />
         </div>
       )}
       <Modal
