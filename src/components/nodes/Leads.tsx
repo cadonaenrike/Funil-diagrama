@@ -40,6 +40,12 @@ export function Create() {
           <FaUsers size={32} className="mb-2" />
           <span className="font-bold text-center">Leads</span>
 
+         <Handle
+            id="right"
+            position={Position.Right}
+            type="source"
+            className="-right-1 w-3 h-3"
+          />
           <Handle
             id="left"
             position={Position.Left}
