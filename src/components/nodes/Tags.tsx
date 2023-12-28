@@ -48,7 +48,7 @@ export function Tag() {
     <>
       {!isRemoved && (
         <div
-          className="h-50 border border-solid border-blue-300 p-2 rounded flex flex-col items-center shadow-md bg-blue-200 cursor-pointer"
+          className="h-50 border border-solid border-cyan-300 p-2 rounded flex flex-col items-center shadow-md bg-cyan-200"
           onClick={handleNodeClick}
         >
           <IoMdPricetag size={32} className="mb-2" />
