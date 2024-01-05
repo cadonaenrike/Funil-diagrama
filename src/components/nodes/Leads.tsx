@@ -23,6 +23,7 @@ export function Create() {
 
   const handleRemoveFromScreen = () => {
     setIsRemoved(true);
+    closeModal();
   };
 
   const closeModal = () => {
@@ -34,24 +35,22 @@ export function Create() {
     <>
       {!isRemoved && (
         <div
-          className="h-50 border border-solid border-cyan-300 p-2 rounded flex flex-col justify-between shadow-md bg-cyan-200"
+          className="h-50 p-2 rounded flex flex-col"
           onClick={handleNodeClick}
         >
-          <FaUsers size={32} className="mb-2" />
-          <span className="font-bold text-center">Leads</span>
+          <section className="bg-amber-800 rounded-br-3xl rounded-tl-3xl h-14 w-16 flex items-center justify-center">
+            <FaUsers size={32} className="text-white" />
+          </section>
 
-         <Handle
-            id="right"
-            position={Position.Right}
-            type="source"
-            className="-right-1 w-3 h-3"
-          />
-          <Handle
-            id="left"
-            position={Position.Left}
-            type="source"
-            className="-left-1 w-3 h-3"
-          />
+          <section>
+            <Handle
+              id="right"
+              position={Position.Right}
+              type="source"
+              className="-right-1.5 w-3 h-3 top-9"
+            />
+          </section>
+          <span className="font-bold text-center">Leads</span>
         </div>
       )}
 

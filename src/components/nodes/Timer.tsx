@@ -16,15 +16,7 @@ export function Timer() {
   const [startTime, setStartTime] = useState("08:00");
   const [endTime, setEndTime] = useState("22:00");
   const [isSpecificDays, setIsSpecificDays] = useState(false);
-  const [selectedDays, setSelectedDays] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [selectedDays, setSelectedDays] = useState([false]);
   const [isRemoved, setIsRemoved] = useState(false);
 
   const handleNodeClick = () => {
@@ -73,29 +65,34 @@ export function Timer() {
 
   const handleRemoveFromScreen = () => {
     setIsRemoved(true);
+    closeModal();
   };
 
   return (
     <>
       {!isRemoved && (
         <div
-          className="h-50 border border-solid border-cyan-300 p-2 rounded flex flex-col items-center shadow-md bg-cyan-200 cursor-pointer"
+          className="h-50 p-2 flex flex-col items-center cursor-pointer"
           onClick={handleNodeClick}
         >
-          <TfiTimer size={32} className="mb-2" />
+          <section className="bg-black rounded-lg w-16 flex items-center h-14 justify-center bg-opacity-90">
+            <TfiTimer size={32} className="text-white" />
+          </section>
+          <section>
+            <Handle
+              id="right"
+              position={Position.Right}
+              type="source"
+              className="right-6 w-3 h-3 top-9"
+            />
+            <Handle
+              id="left"
+              position={Position.Left}
+              type="source"
+              className="left-6 w-3 h-3 top-9"
+            />
+          </section>
           <span className="font-bold text-center">Configurar Timer</span>
-          <Handle
-            id="right"
-            position={Position.Right}
-            type="source"
-            className="-right-1 w-3 h-3"
-          />
-          <Handle
-            id="left"
-            position={Position.Left}
-            type="source"
-            className="-left-1 w-3 h-3"
-          />
         </div>
       )}
       <Modal

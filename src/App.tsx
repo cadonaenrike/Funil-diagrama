@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactFlow, {
   Background,
   ConnectionMode,
@@ -18,6 +19,7 @@ import { Funnel } from "./components/nodes/Funil";
 import { WhatsApp } from "./components/nodes/WhatsApp";
 import { Timer } from "./components/nodes/Timer";
 import { Tag } from "./components/nodes/Tags";
+import { NodeType } from "./configs/types/NodeType";
 
 const node_type = {
   square: Square,
@@ -39,20 +41,41 @@ function App() {
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  const onMenuItemClick = (type) => {
-    const newNode = {
+
+  const onMenuItemClick = (
+    type: NodeType["type"],
+    position: { x: number; y: number }
+  ) => {
+    const newNode: NodeType = {
       id: crypto.randomUUID(),
       type,
-      position: { x: 200, y: 200 },
+      position,
       data: {},
     };
 
     setNodes((prevNodes) => [...prevNodes, newNode]);
   };
 
+  const handleNodeDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleNodeDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const type = e.dataTransfer.getData("text");
+    const newPosition = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+    onMenuItemClick(type as NodeType["type"], newPosition);
+  };
+
   return (
-    <div className="w-screen h-screen">
+    <div
+      className="w-screen h-screen"
+      onDrop={handleNodeDrop}
+      onDragOver={handleNodeDragOver}
+    >
       <ReactFlow
         nodeTypes={node_type}
         nodes={nodes}

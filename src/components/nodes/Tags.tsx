@@ -42,31 +42,36 @@ export function Tag() {
 
   const handleRemoveFromScreen = () => {
     setIsRemoved(true);
+    closeModal();
   };
 
   return (
     <>
       {!isRemoved && (
         <div
-          className="h-50 border border-solid border-cyan-300 p-2 rounded flex flex-col items-center shadow-md bg-cyan-200"
+          className="h-50 p-2 rounded flex flex-col items-center"
           onClick={handleNodeClick}
         >
-          <IoMdPricetag size={32} className="mb-2" />
+          <section className="w-16 h-14 bg-amber-700 rounded-lg flex items-center justify-center">
+            <IoMdPricetag size={32} className="text-white" />
+          </section>
+          <section>
+            <Handle
+              id="right"
+              position={Position.Right}
+              type="source"
+              className="right-3 w-3 h-3 top-9"
+            />
+            <Handle
+              id="left"
+              position={Position.Left}
+              type="source"
+              className="left-3 w-3 h-3 top-9"
+            />
+          </section>
           <span className="font-bold text-center">
             {selectedTagName || "Adicionar Tag"}
           </span>
-          <Handle
-            id="right"
-            position={Position.Right}
-            type="source"
-            className="-right-1 w-3 h-3"
-          />
-          <Handle
-            id="left"
-            position={Position.Left}
-            type="source"
-            className="-right-1 w-3 h-3"
-          />
         </div>
       )}
       <Modal

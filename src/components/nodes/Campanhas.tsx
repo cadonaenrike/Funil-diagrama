@@ -24,6 +24,7 @@ export function Square() {
 
   const handleRemoveFromScreen = () => {
     setIsRemoved(true);
+    closeModal();
   };
 
   const closeModal = () => {
@@ -51,10 +52,12 @@ export function Square() {
     <>
       {!isRemoved && (
         <div
-          className="h-50 border border-solid border-cyan-300 p-2 rounded flex flex-col items-center shadow-md bg-cyan-200"
+          className="h-50 p-2 flex flex-col items-center "
           onClick={handleNodeClick}
         >
-          <FaFlagCheckered size={32} className="mb-2" />
+          <section className="w-16 h-14 flex items-center justify-center bg-slate-700 rounded-lg">
+            <FaFlagCheckered size={32} className="text-white" />
+          </section>
           <span className="font-bold text-center">
             {modalTitle || "Campanha"}
           </span>
@@ -63,7 +66,7 @@ export function Square() {
             id="right"
             position={Position.Right}
             type="source"
-            className="-right-1 w-3 h-3"
+            className="right-0 w-3 h-3 top-9"
           />
         </div>
       )}
