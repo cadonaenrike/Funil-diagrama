@@ -23,7 +23,7 @@ export function WhatsApp() {
     }
   };
 
-  const handleOtherClick = (e) => {
+  const handleOtherClick = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log("teste");
   };
