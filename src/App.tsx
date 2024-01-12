@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactFlow, {
   Background,
+  Connection,
   ConnectionMode,
   Controls,
   addEdge,
@@ -20,6 +21,7 @@ import { WhatsApp } from "./components/nodes/WhatsApp";
 import { Timer } from "./components/nodes/Timer";
 import { Tag } from "./components/nodes/Tags";
 import { NodeType } from "./configs/types/NodeType";
+import * as React from "react";
 
 const node_type = {
   square: Square,
@@ -34,11 +36,13 @@ function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  const onConnect = useCallback((connection) => {
-    setEdges((currentEdges) => addEdge(connection, currentEdges));
-  }, []);
+  const onConnect = useCallback(
+    (connection: Connection) => {
+      const edge = { ...connection, animated: true };
+      setEdges((currentEdges) => addEdge(edge, currentEdges));
+    },
+    [setEdges]
+  );
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 

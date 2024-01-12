@@ -81,6 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
       </div>
       <hr />
       <img
+        aria-disabled
         src="../../../public/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png"
         alt=""
       />

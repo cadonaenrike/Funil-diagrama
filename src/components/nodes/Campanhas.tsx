@@ -65,7 +65,7 @@ export function Square() {
           <Handle
             id="right"
             position={Position.Right}
-            type="source"
+            type="target"
             className="right-0 w-3 h-3 top-9"
           />
         </div>
