@@ -3,8 +3,8 @@ import { NodeType } from "../../configs/types/NodeType";
 import { MenuItem } from "./Menu";
 import fluxwhatsapp from "../../../public/images/sequenciawhatsapp.svg";
 import fluxmista from "../../../public/images/sequenciamista.svg";
-import fluxwsms from "../../../public/images/sequenciasms.svg";
-import fluxemail from "../../../public/images/sequenciaemail.svg";
+import fluxwsms from "../../../public/images/sequenciasms.png";
+import fluxemail from "../../../public/images/sequenciaemail.png";
 import logoFunnel from "../../../public/images/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png";
 
 interface NavbarProps {
