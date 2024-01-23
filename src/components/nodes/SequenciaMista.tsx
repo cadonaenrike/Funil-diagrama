@@ -65,7 +65,7 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#aa3333c5] rounded-lg">
             <img
-              src="/public/images/sequenciamista.png"
+              src="../../../public/images/sequenciamista.png"
               className="invert"
               height={10}
               width={100}

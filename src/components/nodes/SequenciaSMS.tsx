@@ -63,7 +63,7 @@ export function SequenciaSMS({ id, onRemove }: SequenciaSMSProps) {
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#393970c7] rounded-lg">
             <img
-              src="/public/images/sequenciasms.png"
+              src="../../../public/images/sequenciasms.png"
               className="invert"
               height={10}
               width={100}

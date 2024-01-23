@@ -63,7 +63,7 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#774E30] rounded-lg">
             <img
-              src="/public/images/sequenciaemail.png"
+              src="../../../public/images/sequenciaemail.png"
               className="invert"
               height={10}
               width={100}
