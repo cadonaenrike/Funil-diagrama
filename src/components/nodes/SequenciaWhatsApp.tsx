@@ -6,6 +6,7 @@ import { Handle, Position } from "reactflow";
 import Modal from "react-modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import fluxwhatsapp from "../../../public/images/sequenciamista.png";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
@@ -65,7 +66,7 @@ export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#25a366b2] rounded-lg">
             <img
-              src="../../../public/images/sequenciawhatsapp.png"
+              src={fluxwhatsapp}
               alt="iconefluxwhtasapp"
               className="invert"
               height={10}
