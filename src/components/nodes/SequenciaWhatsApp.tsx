@@ -65,7 +65,7 @@ export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#25a366b2] rounded-lg">
             <img
-              src="/public/sequenciawhatsapp.png"
+              src="/public/images/sequenciawhatsapp.png"
               className="invert"
               height={10}
               width={100}

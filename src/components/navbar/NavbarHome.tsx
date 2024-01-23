@@ -15,25 +15,25 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
       label: "Sequencia Mista",
       type: "seqmista",
       border: "#aa3333",
-      icon: "/public/sequenciamista.svg",
+      icon: "/public/images/sequenciamista.svg",
     },
     {
       label: "Sequencia WhatsApp",
       type: "seqwhatsapp",
       border: "#24af3b",
-      icon: "/public/sequenciawhatsapp.svg",
+      icon: "/public/images/sequenciawhatsapp.svg",
     },
     {
       label: "Sequencia SMS",
       type: "seqsms",
       border: "#393970",
-      icon: "/public/sequenciasms.png",
+      icon: "/public/images/sequenciasms.png",
     },
     {
       label: "Sequencia Email",
       type: "seqemail",
       border: "#774E30",
-      icon: "/public/sequenciaemail.png",
+      icon: "/public/images/sequenciaemail.png",
     },
   ];
 
