@@ -15,25 +15,25 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
       label: "Sequencia Mista",
       type: "seqmista",
       border: "#aa3333",
-      icon: "../../../public/sequenciamista.svg",
+      icon: "/public/sequenciamista.svg",
     },
     {
       label: "Sequencia WhatsApp",
       type: "seqwhatsapp",
       border: "#24af3b",
-      icon: "../../../public/sequenciawhatsapp.svg",
+      icon: "/public/sequenciawhatsapp.svg",
     },
     {
       label: "Sequencia SMS",
       type: "seqsms",
       border: "#393970",
-      icon: "../../../public/sequenciasms.png",
+      icon: "/public/sequenciasms.png",
     },
     {
       label: "Sequencia Email",
       type: "seqemail",
       border: "#774E30",
-      icon: "../../../public/sequenciaemail.png",
+      icon: "/public/sequenciaemail.png",
     },
   ];
 
@@ -102,7 +102,7 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
       </div>
       <hr />
       <img
-        src="../../../public/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png"
+        src="/public/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png"
         alt=""
       />
     </div>
