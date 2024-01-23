@@ -1,6 +1,11 @@
 import { TfiTimer } from "react-icons/tfi";
 import { NodeType } from "../../configs/types/NodeType";
 import { MenuItem } from "./Menu";
+import fluxwhatsapp from "../../../public/images/sequenciawhatsapp.svg";
+import fluxmista from "../../../public/images/sequenciamista.svg";
+import fluxwsms from "../../../public/images/sequenciasms.svg";
+import fluxemail from "../../../public/images/sequenciaemail.svg";
+import logoFunnel from "../../../public/images/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png";
 
 interface NavbarProps {
   onMenuItemClick: (
@@ -15,25 +20,25 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
       label: "Sequencia Mista",
       type: "seqmista",
       border: "#aa3333",
-      icon: "../../../public/images/sequenciamista.svg",
+      icon: fluxmista,
     },
     {
       label: "Sequencia WhatsApp",
       type: "seqwhatsapp",
       border: "#24af3b",
-      icon: "../../../public/images/sequenciawhatsapp.svg",
+      icon: fluxwhatsapp,
     },
     {
       label: "Sequencia SMS",
       type: "seqsms",
       border: "#393970",
-      icon: "../../../public/images/sequenciasms.png",
+      icon: fluxwsms,
     },
     {
       label: "Sequencia Email",
       type: "seqemail",
       border: "#774E30",
-      icon: "../../../public/images/sequenciaemail.png",
+      icon: fluxemail,
     },
   ];
 
@@ -101,10 +106,7 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
         ))}
       </div>
       <hr />
-      <img
-        src="/public/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png"
-        alt=""
-      />
+      <img src={logoFunnel} alt="" />
     </div>
   );
 };

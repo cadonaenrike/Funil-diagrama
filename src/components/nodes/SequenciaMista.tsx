@@ -5,6 +5,7 @@ import { Handle, Position } from "reactflow";
 //@ts-ignore
 import Modal from "react-modal";
 import { useState } from "react";
+import fluxmista from "../../../public/images/sequenciamista.png";
 
 interface SequenciaMistaProps {
   id: string;
@@ -64,12 +65,7 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
           onClick={handleNodeClick}
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#aa3333c5] rounded-lg">
-            <img
-              src="../../../public/images/sequenciamista.png"
-              className="invert"
-              height={10}
-              width={100}
-            />
+            <img src={fluxmista} className="invert" height={10} width={100} />
           </section>
           <span className="font-bold text-center text-sm">
             {modalTitle || "Senquencia Mista | 0 Leads"}

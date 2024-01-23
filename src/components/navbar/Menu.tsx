@@ -4,7 +4,7 @@ export interface MenuItem {
   label: string;
   type: string;
   border?: string;
-  icon?: string;
+  icon?: string | { [key: string]: string };
   icon2?: JSX.Element;
 }
 

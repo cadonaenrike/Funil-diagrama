@@ -6,7 +6,7 @@ import { Handle, Position } from "reactflow";
 import Modal from "react-modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fluxwhatsapp from "../../../public/images/sequenciamista.png";
+import fluxwhatsapp from "../../../public/images/sequenciawhatsapp.png";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
