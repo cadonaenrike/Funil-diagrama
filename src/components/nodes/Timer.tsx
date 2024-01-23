@@ -8,8 +8,13 @@ import Modal from "react-modal";
 
 Modal.setAppElement("#root");
 
+interface SequenciaTimeProps {
+  id: string;
+  onRemove: (nodeId: string) => void;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Timer() {
+export function Timer({ id, onRemove }: SequenciaTimeProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [waitTime, setWaitTime] = useState(1);
   const [isScheduled, setIsScheduled] = useState(false);
@@ -64,6 +69,7 @@ export function Timer() {
   };
 
   const handleRemoveFromScreen = () => {
+    if (onRemove) onRemove(id);
     setIsRemoved(true);
     closeModal();
   };

@@ -32,7 +32,7 @@ const node_type = {
   tag: Tag,
 };
 
-function App() {
+function WhatsAppFlux() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
 
@@ -98,4 +98,4 @@ function App() {
   );
 }
 
-export default App;
+export default WhatsAppFlux;
