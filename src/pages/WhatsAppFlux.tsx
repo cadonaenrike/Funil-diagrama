@@ -13,7 +13,6 @@ import { zinc } from "tailwindcss/colors";
 
 import { useCallback } from "react";
 
-import Navbar from "../components/navbar/Navbar";
 import { Square } from "../components/nodes/Campanhas";
 import { Create } from "../components/nodes/Leads";
 import { Funnel } from "../components/nodes/Funil";
@@ -22,6 +21,15 @@ import { Timer } from "../components/nodes/Timer";
 import { Tag } from "../components/nodes/Tags";
 import { NodeType } from "../configs/types/NodeType";
 import * as React from "react";
+import {
+  FaFlagCheckered,
+  FaFunnelDollar,
+  FaTag,
+  FaUser,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { TfiTimer } from "react-icons/tfi";
+import NavbarProps from "../components/navbar/NavbarProps";
 
 const node_type = {
   square: Square,
@@ -35,6 +43,15 @@ const node_type = {
 function WhatsAppFlux() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
+
+  const menuItems = [
+    { label: "Campanha", type: "square", icon: <FaFlagCheckered /> },
+    { label: "Funil", type: "funnel", icon: <FaFunnelDollar /> },
+    { label: "Leads", type: "create", icon: <FaUser /> },
+    { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
+    { label: "Timer", type: "timer", icon: <TfiTimer /> },
+    { label: "Tag", type: "tag", icon: <FaTag /> },
+  ];
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -93,7 +110,7 @@ function WhatsAppFlux() {
         <Controls />
       </ReactFlow>
 
-      <Navbar onMenuItemClick={onMenuItemClick} />
+      <NavbarProps menuItems={menuItems} onMenuItemClick={onMenuItemClick} />
     </div>
   );
 }
