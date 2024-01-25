@@ -34,7 +34,7 @@ const node_type = {
   seqemail: SequenciaEmail,
 };
 
-function App() {
+function Home() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
 
@@ -147,4 +147,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

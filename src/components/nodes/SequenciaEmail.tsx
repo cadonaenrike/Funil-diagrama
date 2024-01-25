@@ -5,6 +5,7 @@ import { Handle, Position } from "reactflow";
 //@ts-ignore
 import Modal from "react-modal";
 import { useState } from "react";
+import { DropDown } from "../dropdawn/DropDawn";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
@@ -16,18 +17,22 @@ interface SequenciaEmailProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isDrowOpen, setDrowOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
 
-  const handleNodeClick = () => {
+  const handleNodeClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (!isRemoved) {
       // Abrir o modal quando o nó for clicado
-      setModalOpen(true);
+      setDrowOpen(!isDrowOpen);
     }
   };
 
-  const handleRemoveFromScreen = () => {
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     if (onRemove) onRemove(id);
     setIsRemoved(true);
     closeModal();
@@ -59,6 +64,7 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
       {!isRemoved && (
         <div
           className="h-50 p-2 flex flex-col items-center "
+          onContextMenu={handleNodeClick}
           onClick={handleNodeClick}
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#774E30] rounded-lg">
@@ -78,6 +84,17 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
             position={Position.Right}
             type="target"
             className="right-4 w-3 h-3 top-7"
+          />
+          <DropDown
+            onClickButtonCopy={() => {
+              console.log("clicou");
+            }}
+            onClickButtonExport={() => {
+              console.log("clicou");
+            }}
+            onClickButton={handleRemoveFromScreen}
+            isOpen={isDrowOpen}
+            toggleDropDown={() => setDrowOpen(false)}
           />
         </div>
       )}

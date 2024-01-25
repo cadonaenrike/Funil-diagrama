@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fluxwhatsapp from "../../../public/images/sequenciawhatsapp.png";
+import { DropDown } from "../dropdawn/DropDawn";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
@@ -18,6 +19,7 @@ interface SequenciaWhatsAppProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isDrowOpen, setDrowOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
@@ -30,7 +32,16 @@ export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
     }
   };
 
-  const handleRemoveFromScreen = () => {
+  const handleNodleClickDelet = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isRemoved) {
+      setDrowOpen(!isDrowOpen);
+    }
+  };
+
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     setIsRemoved(true);
     if (onRemove) onRemove(id);
     closeModal();
@@ -61,7 +72,8 @@ export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
     <>
       {!isRemoved && (
         <div
-          className="h-50 p-2 flex flex-col items-center "
+          className="h-50 p-2 flex flex-col items-center relative"
+          onContextMenu={handleNodleClickDelet}
           onClick={handleNodeClick}
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#25a366b2] rounded-lg">
@@ -73,6 +85,7 @@ export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
               width={100}
             />
           </section>
+
           <span className="font-bold text-center text-sm">
             {modalTitle || "Senquencia de WhatsApp | 0 Leads"}
           </span>
@@ -88,6 +101,17 @@ export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
             position={Position.Right}
             type="source"
             className="right-11 w-3 h-3 top-7"
+          />
+          <DropDown
+            onClickButtonCopy={() => {
+              console.log("clicou");
+            }}
+            onClickButtonExport={() => {
+              console.log("clicou");
+            }}
+            onClickButton={handleRemoveFromScreen}
+            isOpen={isDrowOpen}
+            toggleDropDown={() => setDrowOpen(false)}
           />
         </div>
       )}

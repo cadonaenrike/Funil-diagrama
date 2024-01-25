@@ -6,6 +6,7 @@ import { Handle, Position } from "reactflow";
 import Modal from "react-modal";
 import { useState } from "react";
 import fluxmista from "../../../public/images/sequenciamista.png";
+import { DropDown } from "../dropdawn/DropDawn";
 
 interface SequenciaMistaProps {
   id: string;
@@ -17,18 +18,22 @@ Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isDrowOpen, setDrowOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
 
-  const handleNodeClick = () => {
+  const handleNodeClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (!isRemoved) {
       // Abrir o modal quando o nó for clicado
-      setModalOpen(true);
+      setDrowOpen(!isDrowOpen);
     }
   };
 
-  const handleRemoveFromScreen = () => {
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     if (onRemove) {
       onRemove(id);
     }
@@ -62,7 +67,7 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
       {!isRemoved && (
         <div
           className="h-50 p-2 flex flex-col items-center "
-          onClick={handleNodeClick}
+          onContextMenu={handleNodeClick}
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#aa3333c5] rounded-lg">
             <img src={fluxmista} className="invert" height={10} width={100} />
@@ -82,6 +87,17 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
             position={Position.Right}
             type="source"
             className="right-4 w-3 h-3 top-7"
+          />
+          <DropDown
+            isOpen={isDrowOpen}
+            toggleDropDown={() => setDrowOpen(false)}
+            onClickButton={handleRemoveFromScreen}
+            onClickButtonCopy={() => {
+              console.log("clicou");
+            }}
+            onClickButtonExport={() => {
+              console.log("clicou");
+            }}
           />
         </div>
       )}

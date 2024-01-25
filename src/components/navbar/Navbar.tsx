@@ -8,6 +8,7 @@ import {
 import { TfiTimer } from "react-icons/tfi";
 import { NodeType } from "../../configs/types/NodeType";
 import { MenuItem } from "./Menu";
+import logoFunnel from "../../../public/images/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png";
 
 interface NavbarProps {
   onMenuItemClick: (
@@ -64,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
       onDragOver={handleDragOver}
       className="fixed top-1/2 transform -translate-y-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-3/6 flex flex-col justify-evenly"
     >
-      <h2 className="text-lg font-bold mb-4 text-center">Clique nos ícones</h2>
+      <h2 className="text-lg font-bold mb-4 text-center">Arraste os ícones</h2>
       <div className="grid grid-cols-2">
         {menuItems.map((menuItem) => (
           <button
@@ -80,11 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
         ))}
       </div>
       <hr />
-      <img
-        aria-disabled
-        src="../../../public/images/funnelads 3. hrzt_Prancheta 1 cópia 7_Prancheta 1 cópia 8.png"
-        alt=""
-      />
+      <img aria-disabled src={logoFunnel} alt="" />
     </div>
   );
 };

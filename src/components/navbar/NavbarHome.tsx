@@ -64,40 +64,38 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
     e.preventDefault();
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-
-  const handleMenuItemClick = (menuItem: MenuItem) => {
-    const initialPosition = {
-      y: 600,
-      x: 400,
-    };
-    onMenuItemClick(menuItem.type as NodeType["type"], initialPosition);
-  };
-
   return (
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       className="whitespace-nowrap overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-4/6 flex flex-col justify-evenly"
     >
-      <h2 className="text-lg font-bold mb-4 text-center">Clique nos ícones</h2>
+      <h2 className="text-lg  mb-2 text-center">Arraste os ícones</h2>
       <div className="grid grid-cols-1 items-center justify-center">
-        <section className="flex items-center justify-center border-b border-gray-600 mb-3">
+        <section className="flex items-center justify-center ">
           <button
             draggable
-            className="focus:outline-none w-20 hover:bg-[#000000d3] rounded-lg hover:text-white mb-4 flex flex-col items-center"
+            className="focus:outline-none border-zinc-600 w-20 border-dotted border-2 py-2 rounded-lg  mb-2 flex flex-col items-center"
           >
             <TfiTimer />
-            <span className="mt-2">Timer</span>
+            <span className="">Timer</span>
           </button>
         </section>
+
+        <div className="flex flex-col items-center my-2">
+          <div className="w-full border-t border-zinc-500"></div>
+          <span className="text-center text-xs transform -translate-y-1/2 bg-white px-4">
+            Agendamento
+          </span>
+        </div>
+
         {menuItems.map((menuItem) => (
           <button
             draggable
             style={{ borderColor: menuItem.border }}
             onDragStart={(e) => handleDragStart(e, menuItem)}
             key={menuItem.type}
-            onClick={() => handleMenuItemClick(menuItem)}
+            // onClick={() => handleMenuItemClick(menuItem)}
             className="focus:outline-none mb-1 flex flex-col items-center border-2 rounded-lg py-2 px-6 border-dotted whitespace-nowrap overflow-hidden text-ellipsis"
           >
             <img src={menuItem.icon} />
