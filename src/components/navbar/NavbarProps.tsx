@@ -60,10 +60,12 @@ const Navbar: React.FC<NavbarProps> = ({
       onDragOver={handleDragOver}
       className="fixed top-1/2 transform -translate-y-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-3/6 flex flex-col justify-evenly"
     >
-      <h2 className="text-lg mb-4 text-center">Arraste os ícones</h2>
+      <h2 className="text-lg mb-4 text-center" draggable="false">
+        Arraste os ícones
+      </h2>
       {pairs.map((pair, index) => (
         <div key={index}>
-          <div className="flex flex-col items-center my-2">
+          <div className="flex flex-col items-center my-2" draggable="false">
             <div className="w-full border-t border-zinc-500"></div>
             <span className="text-center text-xs transform -translate-y-1/2 bg-white px-4">
               {index === 0 ? "Controles" : "Disparos"}
@@ -86,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
       ))}
       <hr />
-      <img aria-disabled src={logoFunnel} alt="" />
+      <img draggable={false} src={logoFunnel} alt="" />
     </div>
   );
 };

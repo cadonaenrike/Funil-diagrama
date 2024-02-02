@@ -5,6 +5,7 @@ import { Handle, Position } from "reactflow";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
+import { DropDown } from "../dropdawn/DropDawn";
 
 Modal.setAppElement("#root");
 
@@ -23,8 +24,21 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
   const [isSpecificDays, setIsSpecificDays] = useState(false);
   const [selectedDays, setSelectedDays] = useState([false]);
   const [isRemoved, setIsRemoved] = useState(false);
+  const [isDrowOpen, setDrowOpen] = useState(false);
 
-  const handleNodeClick = () => {
+  const handleNodeClickContext = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isRemoved) {
+      // Abrir o modal quando o nó for clicado
+      setDrowOpen(!isDrowOpen);
+      setModalOpen(false);
+    }
+  };
+
+  const handleNodeClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setModalOpen(true);
   };
 
@@ -79,6 +93,7 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
       {!isRemoved && (
         <div
           className="h-50 p-2 flex flex-col items-center cursor-pointer"
+          onContextMenu={handleNodeClickContext}
           onClick={handleNodeClick}
         >
           <section className="bg-black rounded-lg w-16 flex items-center h-14 justify-center bg-opacity-90">
@@ -99,6 +114,13 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
             />
           </section>
           <span className="font-bold text-center">Configurar Timer</span>
+          <DropDown
+            isOpen={isDrowOpen}
+            onClickButton={handleRemoveFromScreen}
+            onClickButtonCopy={() => {}}
+            onClickButtonExport={() => {}}
+            toggleDropDown={() => setDrowOpen(false)}
+          />
         </div>
       )}
       <Modal
