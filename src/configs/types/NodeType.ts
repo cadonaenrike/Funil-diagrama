@@ -11,7 +11,8 @@ export interface NodeType {
     | "seqmista"
     | "seqwhatsapp"
     | "seqsms"
-    | "seqemail";
+    | "seqemail"
+    | "success";
   position: { x: number; y: number };
   data: any;
 }

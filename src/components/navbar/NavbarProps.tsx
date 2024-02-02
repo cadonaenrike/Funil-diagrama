@@ -58,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="fixed top-1/2 transform -translate-y-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-3/6 flex flex-col justify-evenly"
+      className="fixed top-1/2 transform -translate-y-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4  flex flex-col justify-evenly h-auto"
     >
       <h2 className="text-lg mb-4 text-center" draggable="false">
         Arraste os ícones

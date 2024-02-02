@@ -4,7 +4,7 @@ import { Handle, Position } from "reactflow";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
-import { IoFunnelOutline } from "react-icons/io5";
+import sucesso from "../../../public/images/Check.svg";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
@@ -61,9 +61,11 @@ export function Sucesso() {
           onClick={handleNodeClick}
         >
           <section className="w-16 h-14 flex items-center justify-center bg-slate-700 rounded-lg">
-            <IoFunnelOutline size={32} className="text-white" />
+            <img src={sucesso} width={32} height={32} className="text-white" />
           </section>
-          <span className="font-bold text-center">{modalTitle || "Funil"}</span>
+          <span className="font-bold text-center">
+            {modalTitle || "Sucesso"}
+          </span>
 
           <Handle
             id="right"
@@ -101,7 +103,7 @@ export function Sucesso() {
           },
         }}
       >
-        <h2 className="text-2xl font-bold mb-4">Funil</h2>
+        <h2 className="text-2xl font-bold mb-4">Sucesso</h2>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Escolha uma opção:

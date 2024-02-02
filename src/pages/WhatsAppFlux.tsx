@@ -30,6 +30,7 @@ import {
 } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import NavbarProps from "../components/navbar/NavbarProps";
+import { Sucesso } from "../components/nodes/Sucesso";
 
 const node_type = {
   square: Square,
@@ -38,6 +39,7 @@ const node_type = {
   whatsApp: WhatsApp,
   timer: Timer,
   tag: Tag,
+  success: Sucesso,
 };
 
 function WhatsAppFlux() {
@@ -51,6 +53,18 @@ function WhatsAppFlux() {
     { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
     { label: "Timer", type: "timer", icon: <TfiTimer /> },
     { label: "Tag", type: "tag", icon: <FaTag /> },
+    {
+      label: "Sucesso",
+      type: "success",
+      icon: (
+        <img
+          src="../../public/images/Check.svg"
+          className="invert"
+          height={27}
+          width={27}
+        />
+      ),
+    },
   ];
 
   const onConnect = useCallback(
