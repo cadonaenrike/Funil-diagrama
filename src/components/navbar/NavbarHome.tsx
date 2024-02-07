@@ -76,7 +76,7 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="whitespace-nowrap overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-4/6 flex flex-col justify-evenly"
+      className="whitespace-nowrap text-white overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-4/6 flex flex-col justify-evenly"
     >
       <h2 className="text-lg  mb-2 text-center" draggable="false">
         Arraste os ícones
@@ -88,19 +88,18 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
               key={item.type}
               draggable
               onDragStart={(e) => handleDragStart(e, item)}
-              className="focus:outline-none border-zinc-600 w-20 border-dotted border-2 py-2 rounded-lg  mb-2 flex flex-col items-center"
+              className="border-zinc-600 w-20 hover:bg-[#0b0b0f] py-3 rounded-lg  mb-2 flex flex-col items-center"
             >
-              <TfiTimer />
+              <TfiTimer size={25} />
               <span className="">{item.label}</span>
             </button>
           ))}
         </section>
 
-        <div className="flex flex-col items-center my-2" draggable="false">
-          <div className="w-full border-t border-zinc-500"></div>
-          <span className="text-center text-xs transform -translate-y-1/2 bg-white px-4">
-            Agendamento
-          </span>
+        <div className="flex items-center my-2" draggable="false">
+          <div className="w-14 border-t border-zinc-500"></div>
+          <span className="text-center text-xs px-1">Agendamento</span>
+          <div className="w-14 border-t border-zinc-500"></div>
         </div>
 
         {menuItems.map((menuItem) => (
@@ -111,7 +110,7 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
             key={menuItem.type}
             className="focus:outline-none mb-1 flex flex-col items-center border-2 rounded-lg py-2 px-6 border-dotted whitespace-nowrap overflow-hidden text-ellipsis"
           >
-            <img src={menuItem.icon} />
+            <img className="invert" src={menuItem.icon} />
             <span className="text-xs">{menuItem.label}</span>
           </button>
         ))}

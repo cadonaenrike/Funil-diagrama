@@ -9,7 +9,6 @@ import ReactFlow, {
   useNodesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { zinc } from "tailwindcss/colors";
 
 import { useCallback } from "react";
 
@@ -21,16 +20,11 @@ import { Timer } from "../components/nodes/Timer";
 import { Tag } from "../components/nodes/Tags";
 import { NodeType } from "../configs/types/NodeType";
 import * as React from "react";
-import {
-  FaFlagCheckered,
-  FaFunnelDollar,
-  FaTag,
-  FaUser,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaFunnelDollar, FaTag, FaUser, FaWhatsapp } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import NavbarProps from "../components/navbar/NavbarProps";
 import { Sucesso } from "../components/nodes/Sucesso";
+import { Start } from "../components/nodes/Start";
 
 const node_type = {
   square: Square,
@@ -40,6 +34,7 @@ const node_type = {
   timer: Timer,
   tag: Tag,
   success: Sucesso,
+  inicio: Start,
 };
 
 function WhatsAppFlux() {
@@ -47,7 +42,18 @@ function WhatsAppFlux() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
 
   const menuItems = [
-    { label: "Campanha", type: "square", icon: <FaFlagCheckered /> },
+    {
+      label: "Start",
+      type: "inicio",
+      icon: (
+        <img
+          src="../../public/images/Start.svg"
+          className="invert"
+          width={25}
+          height={25}
+        />
+      ),
+    },
     { label: "Funil", type: "funnel", icon: <FaFunnelDollar /> },
     { label: "Leads", type: "create", icon: <FaUser /> },
     { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
@@ -56,14 +62,7 @@ function WhatsAppFlux() {
     {
       label: "Sucesso",
       type: "success",
-      icon: (
-        <img
-          src="../../public/images/Check.svg"
-          className="invert"
-          height={27}
-          width={27}
-        />
-      ),
+      icon: <img src="../../public/images/Check.svg" height={25} width={25} />,
     },
   ];
 
@@ -107,7 +106,7 @@ function WhatsAppFlux() {
 
   return (
     <div
-      className="w-screen h-screen"
+      className="w-screen h-screen overflow-auto"
       onDrop={handleNodeDrop}
       onDragOver={handleNodeDragOver}
     >
@@ -120,8 +119,11 @@ function WhatsAppFlux() {
         onNodesChange={onNodesChange}
         connectionMode={ConnectionMode.Loose}
       >
-        <Background color={zinc[500]} />
-        <Controls />
+        <Background style={{ backgroundColor: "#000", opacity: "0.85" }} />
+        <Controls
+          style={{ backgroundColor: "#646060" }}
+          position="bottom-right"
+        />
       </ReactFlow>
 
       <NavbarProps menuItems={menuItems} onMenuItemClick={onMenuItemClick} />

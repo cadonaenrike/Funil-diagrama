@@ -12,7 +12,16 @@ export interface NodeType {
     | "seqwhatsapp"
     | "seqsms"
     | "seqemail"
-    | "success";
+    | "success"
+    | "inicio";
   position: { x: number; y: number };
   data: any;
 }
+
+export type PanelPosition =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right";

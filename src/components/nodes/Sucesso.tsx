@@ -12,16 +12,44 @@ import {
   FaPhone,
   FaRegClock,
 } from "react-icons/fa";
+import ToggleSwitch from "../toggleSwitch/toggleSwitch";
+import { DropDown } from "../dropdawn/DropDawn";
 
-Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
+Modal.setAppElement("#root");
+
+interface SequenciaTimeProps {
+  id: string;
+  onRemove: (nodeId: string) => void;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Sucesso() {
+export function Sucesso({ id, onRemove }: SequenciaTimeProps) {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
   const [modalTitle, setModalTitle] = useState("");
-  const [modalDescription, setModalDescription] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [isDropdown, setDropdown] = useState(false);
+
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setIsRemoved(true);
+    if (onRemove) onRemove(id);
+    closeModal();
+  };
+
+  const handleAutoNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setModalTitle(e.target.value);
+  };
+
+  const handleNodeClickContext = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isRemoved) {
+      // Abrir o modal quando o nó for clicado
+      setDropdown(!isDropdown);
+    }
+  };
 
   const handleNodeClick = () => {
     if (!isRemoved) {
@@ -30,9 +58,8 @@ export function Sucesso() {
     }
   };
 
-  const handleRemoveFromScreen = () => {
-    setIsRemoved(true);
-    closeModal();
+  const handleItemClick = (index: number) => {
+    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
   const closeModal = () => {
@@ -40,21 +67,14 @@ export function Sucesso() {
     setModalOpen(false);
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setModalDescription(e.target.value);
-  };
-
-  const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(e.target.value);
+  const removerNome = () => {
+    setModalTitle("");
+    handleItemClick(1);
   };
 
   const handleSave = () => {
     // Faça algo com os valores do título, descrição e opção selecionada
     console.log("Título:", modalTitle);
-    console.log("Descrição:", modalDescription);
-    console.log("Opção Selecionada:", selectedOption);
-
-    setModalTitle(selectedOption);
 
     // Feche o modal
     closeModal();
@@ -64,16 +84,27 @@ export function Sucesso() {
     <>
       {!isRemoved && (
         <div
-          className="h-50 p-2 flex flex-col items-center"
+          className="h-50 p-2 flex flex-col items-center text-white"
           onClick={handleNodeClick}
+          onContextMenu={handleNodeClickContext}
         >
-          <section className="w-16 h-14 flex items-center justify-center bg-slate-700 rounded-lg">
+          <section className="w-16 h-14 flex items-center justify-center bg-[#15B408] rounded-lg">
             <img src={sucesso} width={32} height={32} className="text-white" />
           </section>
           <span className="font-bold text-center">
             {modalTitle || "Sucesso"}
           </span>
-
+          <DropDown
+            onClickButtonCopy={() => {
+              console.log("clicou");
+            }}
+            onClickButtonExport={() => {
+              console.log("clicou");
+            }}
+            onClickButton={handleRemoveFromScreen}
+            isOpen={isDropdown}
+            toggleDropDown={() => setDropdown(false)}
+          />
           <Handle
             id="right"
             position={Position.Right}
@@ -100,13 +131,15 @@ export function Sucesso() {
             marginRight: "-50%",
             transform: "translate(-50%, -50%)",
             borderRadius: "8px",
+            border: "none",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            background: "#fff",
+            background: "#000000",
             padding: "20px",
-            maxWidth: "400px",
+            maxWidth: "700px",
+            color: "#FFFFFF",
           },
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.767)",
           },
         }}
       >
@@ -124,29 +157,71 @@ export function Sucesso() {
           <FaArrowRight />
           <FaEnvelope />
         </div>
-        <div className="bg-blue-300 rounded-md flex gap-2 px-1 py-3 mb-4">
-          <FaRegClock size={25} className="text-blue-800" />
-          <section className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold">
-              Agendar data e hora limite?
-            </h2>
-            <p className="text-xs ">
-              A etapa vai enviar as mensagens aos leads até uma data e hora
-              determinada.
-            </p>
+        <div className="bg-[#071318] rounded-md flex gap-2 flex-col px-1 py-3 mb-4">
+          <section className="flex gap-3 relative">
+            <FaRegClock size={25} className="text-cyan-700" />
+            <section className="flex flex-col gap-2">
+              <h2 className="text-sm font-semibold">
+                Agendar data e hora limite?
+              </h2>
+              <p className="text-xs ">
+                A etapa vai enviar as mensagens aos leads até uma data e hora
+                determinada.
+              </p>
+            </section>
+            <div className="absolute right-3">
+              <ToggleSwitch toggle={toggle} setToggle={setToggle} />
+            </div>
           </section>
-          <input
-            className="mr-2 mt-[0.3rem] h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-neutral-300 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:bg-neutral-600 dark:after:bg-neutral-400 dark:checked:bg-primary dark:checked:after:bg-primary dark:focus:before:shadow-[3px_-1px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca]"
-            type="checkbox"
-            role="switch"
-          />
+          {toggle && (
+            <div className="flex flex-col ml-9 mr-3">
+              <input
+                type="datetime-local"
+                className="bg-transparent rounded-lg"
+              />
+              <span className="text-sm">Horario de Brasilia:</span>
+            </div>
+          )}
+        </div>
+
+        <div className="w-full bg-[#1F1F1F] rounded-lg mb-10">
+          <div className="rounded-lg">
+            <div className="rounded-lg">
+              <button
+                className="w-full text-left px-4 py-2 bg-[#1F1F1F] rounded-lg focus:outline-none"
+                onClick={() => handleItemClick(1)}
+              >
+                Configurações avançadas
+              </button>
+              {activeIndex === 1 && (
+                <div className="px-4 py-2">
+                  <h2>Nome da Automoção</h2>
+                  <span className="text-sm">
+                    O campo abaixo se refere ao nome da automoção sucesso
+                  </span>
+                  <input
+                    type="text"
+                    className="bg-transparent rounded-lg w-full mb-3"
+                    value={modalTitle}
+                    onChange={handleAutoNameChange}
+                  />
+                  <button
+                    className="bg-[#D20606] w-full py-2 rounded-md"
+                    onClick={removerNome}
+                  >
+                    Remover
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
         <div className="flex space-x-4 justify-end">
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-blue-300"
+            className="px-7 py-1 bg-[#046A04] text-white rounded-md hover:bg-[#379233] focus:outline-none focus:ring focus:border-blue-300 mr-2"
           >
-            Salvar
+            OK
           </button>
         </div>
       </Modal>

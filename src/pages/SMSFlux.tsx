@@ -9,7 +9,6 @@ import ReactFlow, {
   useNodesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { zinc } from "tailwindcss/colors";
 
 import { useCallback } from "react";
 
@@ -89,8 +88,11 @@ function SMSFlux() {
         onNodesChange={onNodesChange}
         connectionMode={ConnectionMode.Loose}
       >
-        <Background color={zinc[500]} />
-        <Controls />
+        <Background style={{ backgroundColor: "#000", opacity: "0.85" }} />
+        <Controls
+          style={{ backgroundColor: "#646060" }}
+          position="bottom-right"
+        />
       </ReactFlow>
 
       <Navbar onMenuItemClick={onMenuItemClick} />

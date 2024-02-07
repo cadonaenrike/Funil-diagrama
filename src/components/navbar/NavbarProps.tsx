@@ -10,6 +10,11 @@ interface NavbarProps {
   menuItems: MenuItem[];
 }
 
+interface ConfiguracaoLinha {
+  itensPorLinha: number[];
+  nomesLinhas: string[];
+}
+
 const Navbar: React.FC<NavbarProps> = ({
   onMenuItemClick,
   menuItems,
@@ -44,34 +49,55 @@ const Navbar: React.FC<NavbarProps> = ({
     onMenuItemClick(menuItem.type as NodeType["type"], initialPosition);
   };
 
-  // Agrupa os itens em pares
-  const pairs = menuItems.reduce<MenuItem[][]>((acc, item, index) => {
-    if (index % 2 === 0) {
-      acc.push([item]);
-    } else {
-      acc[acc.length - 1].push(item);
-    }
-    return acc;
-  }, []);
+  const gerarPares = (configuracaoLinha: ConfiguracaoLinha): MenuItem[][] => {
+    const { itensPorLinha } = configuracaoLinha;
+    let indiceItem = 0;
+    return itensPorLinha.map((numItens) => {
+      const linha = [];
+      for (let i = 0; i < numItens && indiceItem < menuItems.length; i++) {
+        linha.push(menuItems[indiceItem]);
+        indiceItem++;
+      }
+      return linha;
+    });
+  };
+
+  const configuracaoLinha: ConfiguracaoLinha = {
+    itensPorLinha: [1, 2, 2, 3], // Definir o número de itens por linha
+    nomesLinhas: [
+      "início",
+      "Controles",
+      "Ações",
+      "Condições",
+      "Integrar",
+      "Extras",
+    ], // Definir os nomes para cada linha
+  };
+
+  const pares = gerarPares(configuracaoLinha);
 
   return (
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="fixed top-1/2 transform -translate-y-1/2 bg-white rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4  flex flex-col justify-evenly h-auto"
+      className="whitespace-nowrap text-white overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-4/6 flex flex-col justify-evenly"
     >
-      <h2 className="text-lg mb-4 text-center" draggable="false">
+      <h2
+        className="text-lg mb-4 text-center"
+        draggable="false"
+        aria-disabled="true"
+      >
         Arraste os ícones
       </h2>
-      {pairs.map((pair, index) => (
+      {pares.map((pair, index) => (
         <div key={index}>
           <div className="flex flex-col items-center my-2" draggable="false">
             <div className="w-full border-t border-zinc-500"></div>
-            <span className="text-center text-xs transform -translate-y-1/2 bg-white px-4">
-              {index === 0 ? "Controles" : "Disparos"}
+            <span className="text-center text-xs transform -translate-y-1/2 px-4">
+              {configuracaoLinha.nomesLinhas[index]}
             </span>
           </div>
-          <div className="grid grid-cols-2">
+          <div className="flex items-center justify-center gap-5">
             {pair.map((menuItem) => (
               <button
                 draggable

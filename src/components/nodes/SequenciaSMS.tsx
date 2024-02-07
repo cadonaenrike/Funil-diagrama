@@ -99,6 +99,17 @@ export function SequenciaSMS({ id, onRemove }: SequenciaSMSProps) {
             onClickButtonExport={() => {}}
             toggleDropDown={() => setDropdown(false)}
           />
+          <div className="flex rounded-lg">
+            <span className="bg-[#8D8D0B] h-6 w-10 flex justify-center rounded-l-lg">
+              0
+            </span>
+            <span className="bg-[#087208]  h-6 w-10 flex justify-center">
+              0
+            </span>
+            <span className="bg-[#662115] h-6 w-10 flex justify-center rounded-r-lg">
+              0
+            </span>
+          </div>
         </div>
       )}
       <Modal

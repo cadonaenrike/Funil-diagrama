@@ -12,7 +12,6 @@ import ReactFlow, {
   NodeProps,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { zinc } from "tailwindcss/colors";
 
 import { useCallback } from "react";
 
@@ -124,7 +123,7 @@ function Home() {
 
   return (
     <div
-      className="w-screen h-screen"
+      className="w-screen h-screen text-white font-extralight"
       onDrop={handleNodeDrop}
       onDragOver={handleNodeDragOver}
     >
@@ -138,8 +137,11 @@ function Home() {
         onNodesDelete={onNodesDelete}
         connectionMode={ConnectionMode.Loose}
       >
-        <Background color={zinc[500]} />
-        <Controls />
+        <Background style={{ backgroundColor: "#000", opacity: "0.85" }} />
+        <Controls
+          style={{ backgroundColor: "#646060" }}
+          position="bottom-right"
+        />
       </ReactFlow>
 
       <NavbarHome onMenuItemClick={onMenuItemClick} />

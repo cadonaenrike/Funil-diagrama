@@ -44,7 +44,7 @@ export function DropDown({
     <div className="relative inline-block text-left" ref={dropdownRef}>
       {isOpen && (
         <div
-          className="origin-top-right w-44 shadow-lg bg-[#00000036] rounded-lg"
+          className="origin-top-right w-44 shadow-lg bg-[#000000da] rounded-lg absolute -right-[88px]"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="options-menu"
