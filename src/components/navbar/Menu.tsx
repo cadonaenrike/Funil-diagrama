@@ -4,8 +4,8 @@ export interface MenuItem {
   label: string;
   type: string;
   border?: string;
-  icon?: JSX.Element;
-  icon2?: JSX.Element;
+  icon?: string | JSX.Element;
+  icon2?: string | JSX.Element;
 }
 
 interface MenuProps {

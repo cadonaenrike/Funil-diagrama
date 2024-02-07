@@ -25,6 +25,8 @@ import { TfiTimer } from "react-icons/tfi";
 import NavbarProps from "../components/navbar/NavbarProps";
 import { Sucesso } from "../components/nodes/Sucesso";
 import { Start } from "../components/nodes/Start";
+import check from "../../public/images/Check.svg";
+import start from "../../public/images/Start.svg";
 
 const node_type = {
   square: Square,
@@ -45,14 +47,7 @@ function WhatsAppFlux() {
     {
       label: "Start",
       type: "inicio",
-      icon: (
-        <img
-          src="../../public/images/Start.svg"
-          className="invert"
-          width={25}
-          height={25}
-        />
-      ),
+      icon: <img src={start} className="invert" width={25} height={25} />,
     },
     { label: "Funil", type: "funnel", icon: <FaFunnelDollar /> },
     { label: "Leads", type: "create", icon: <FaUser /> },
@@ -62,7 +57,7 @@ function WhatsAppFlux() {
     {
       label: "Sucesso",
       type: "success",
-      icon: <img src="../../public/images/Check.svg" height={25} width={25} />,
+      icon: <img src={check} height={25} width={25} />,
     },
   ];
 

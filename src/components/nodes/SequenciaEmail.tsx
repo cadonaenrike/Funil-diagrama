@@ -6,6 +6,7 @@ import { Handle, Position } from "reactflow";
 import Modal from "react-modal";
 import { useState } from "react";
 import { DropDown } from "../dropdawn/DropDawn";
+import sequenciaemail from "../../../public/images/sequenciaemail.png";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
@@ -69,7 +70,7 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#774E30] rounded-lg">
             <img
-              src="../../../public/images/sequenciaemail.png"
+              src={sequenciaemail}
               className="invert"
               height={10}
               width={100}
