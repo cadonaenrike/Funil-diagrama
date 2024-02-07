@@ -5,7 +5,7 @@ export interface MenuItem {
   type: string;
   border?: string;
   icon?: string | JSX.Element;
-  icon2?: JSX.Element;
+  icon2?: string | JSX.Element;
 }
 
 interface MenuProps {
