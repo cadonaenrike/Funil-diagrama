@@ -5,6 +5,7 @@ import { Handle, Position } from "reactflow";
 //@ts-ignore
 import Modal from "react-modal";
 import { DropDown } from "../dropdawn/DropDawn";
+import start from "../../../public/images/Start.svg";
 
 Modal.setAppElement("#root");
 
@@ -63,11 +64,7 @@ export function Start({ id, onRemove }: SequenciaWhatsAppProps) {
           onContextMenu={handleNodeClickContext}
         >
           <section className="w-16 h-14 bg-[#FFFF00] rounded-lg flex items-center justify-center">
-            <img
-              src="../../../public/images/Start.svg"
-              width={35}
-              height={35}
-            />
+            <img src={start} width={35} height={35} />
           </section>
           <section>
             <Handle
