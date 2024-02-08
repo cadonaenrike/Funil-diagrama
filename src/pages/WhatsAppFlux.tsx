@@ -14,24 +14,25 @@ import { useCallback } from "react";
 
 import { Square } from "../components/nodes/Campanhas";
 import { Create } from "../components/nodes/Leads";
-import { Funnel } from "../components/nodes/Funil";
+import { Aquecimento } from "../components/nodes/Aquecimento";
 import { WhatsApp } from "../components/nodes/WhatsApp";
 import { Timer } from "../components/nodes/Timer";
 import { Tag } from "../components/nodes/Tags";
 import { NodeType } from "../configs/types/NodeType";
 import * as React from "react";
-import { FaFunnelDollar, FaTag, FaUser, FaWhatsapp } from "react-icons/fa";
+import { FaTag, FaUser, FaWhatsapp } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import NavbarProps from "../components/navbar/NavbarProps";
 import { Sucesso } from "../components/nodes/Sucesso";
 import { Start } from "../components/nodes/Start";
 import check from "../../public/images/Check.svg";
 import start from "../../public/images/Start.svg";
+import aquecimento from "../../public/images/aquecimento.svg";
 
 const node_type = {
   square: Square,
   create: Create,
-  funnel: Funnel,
+  aquecimento: Aquecimento,
   whatsApp: WhatsApp,
   timer: Timer,
   tag: Tag,
@@ -49,7 +50,11 @@ function WhatsAppFlux() {
       type: "inicio",
       icon: <img src={start} className="invert" width={25} height={25} />,
     },
-    { label: "Funil", type: "funnel", icon: <FaFunnelDollar /> },
+    {
+      label: "Aquecimento",
+      type: "aquecimento",
+      icon: <img src={aquecimento} height={25} width={25} />,
+    },
     { label: "Leads", type: "create", icon: <FaUser /> },
     { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
     { label: "Timer", type: "timer", icon: <TfiTimer /> },

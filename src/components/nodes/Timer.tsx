@@ -37,7 +37,6 @@ const initialToggle = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Timer({ id, onRemove }: SequenciaTimeProps) {
   const [isModalOpen, setModalOpen] = useState(false);
-
   const [isRemoved, setIsRemoved] = useState(false);
   const [isDrowOpen, setDrowOpen] = useState(false);
   const [active, setActive] = useState<number | 0>(0);
@@ -47,18 +46,16 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
   const handleNodeClickContext = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.button === 2) {
-      if (!isRemoved) {
-        // Abrir o modal quando o nó for clicado
-        setDrowOpen(!isDrowOpen);
-      }
+    if (!isRemoved) {
+      // Abrir o modal quando o nó for clicado
+      setDrowOpen(!isDrowOpen);
     }
   };
 
   const handleNodeClick = () => {
     if (!isRemoved) {
       // Abrir o modal quando o nó for clicado
-      setModalOpen(false);
+      setModalOpen(!isModalOpen);
     }
   };
 

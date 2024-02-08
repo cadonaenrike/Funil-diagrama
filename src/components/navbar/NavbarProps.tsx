@@ -15,7 +15,7 @@ interface ConfiguracaoLinha {
   nomesLinhas: string[];
 }
 
-const Navbar: React.FC<NavbarProps> = ({
+const NavbarProps: React.FC<NavbarProps> = ({
   onMenuItemClick,
   menuItems,
 }: NavbarProps) => {
@@ -120,4 +120,4 @@ const Navbar: React.FC<NavbarProps> = ({
   );
 };
 
-export default Navbar;
+export default NavbarProps;

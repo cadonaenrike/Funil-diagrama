@@ -33,6 +33,13 @@ export function SequenciaSMS({ id, onRemove }: SequenciaSMSProps) {
       setDropdown(!isDropdown);
     }
   };
+  
+  const handleNode = () => {
+    navigate('/SMSFlux')
+    if(!onRemove){
+      setModalOpen(true)
+    }
+  }
 
   const handleRemoveFromScreen = () => {
     if (onRemove) onRemove(id);
@@ -67,6 +74,7 @@ export function SequenciaSMS({ id, onRemove }: SequenciaSMSProps) {
       {!isRemoved && (
         <div
           className="h-50 p-2 flex flex-col items-center "
+          onClick={handleNode}
           onContextMenu={handleNodeClick}
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#393970c7] rounded-lg">

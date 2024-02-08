@@ -15,7 +15,7 @@ import { useCallback } from "react";
 import Navbar from "../components/navbar/Navbar";
 import { Square } from "../components/nodes/Campanhas";
 import { Create } from "../components/nodes/Leads";
-import { Funnel } from "../components/nodes/Funil";
+import { Aquecimento } from "../components/nodes/Aquecimento";
 import { WhatsApp } from "../components/nodes/WhatsApp";
 import { Timer } from "../components/nodes/Timer";
 import { Tag } from "../components/nodes/Tags";
@@ -25,7 +25,7 @@ import * as React from "react";
 const node_type = {
   square: Square,
   create: Create,
-  funnel: Funnel,
+  aquecimento: Aquecimento,
   whatsApp: WhatsApp,
   timer: Timer,
   tag: Tag,

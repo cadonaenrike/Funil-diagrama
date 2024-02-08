@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaPlusCircle, FaWhatsapp } from "react-icons/fa";
 import { Handle, Position } from "reactflow";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 Modal.setAppElement("#root");
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function WhatsApp() {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [message, setMessage] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
   const [scheduledDate, setScheduledDate] = useState("");
   const [attachment, setAttachment] = useState("");
@@ -32,10 +32,6 @@ export function WhatsApp() {
     setModalOpen(false);
   };
 
-  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(e.target.value);
-  };
-
   const handleScheduledTimeChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -53,7 +49,6 @@ export function WhatsApp() {
   };
 
   const handleSend = () => {
-    console.log("Mensagem enviada:", message);
     console.log("Data agendada:", scheduledDate);
     console.log("Hora agendada:", scheduledTime);
     console.log("Anexo:", attachment);
@@ -106,33 +101,39 @@ export function WhatsApp() {
             marginRight: "-50%",
             transform: "translate(-50%, -50%)",
             borderRadius: "8px",
+            border: "none",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            background: "#fff",
+            background: "#000000",
             padding: "20px",
-            maxWidth: "400px",
+            maxWidth: "700px",
+            color: "#FFFFFF",
           },
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.767)",
           },
         }}
       >
         <h2 className="text-2xl font-bold mb-2">Configurar WhatsApp</h2>
-        <p className="text-sm text-gray-600 mb-4">
-          Escritas Automáticas: Em sua mensagem você pode utilizar as seguintes
-          escritas automáticas, para utilizar as informações dos leads com
-          preenchimento automático.
-        </p>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Escreva uma mensagem:
-          </label>
-          <input
-            type="text"
-            value={message}
-            onChange={handleMessageChange}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
+        <div className="bg-[#071318] p-4 rounded-lg flex gap-3">
+          <IoIosInformationCircleOutline size={28} className="text-[#2293C7]" />
+          <section>
+            <h2>Escritas Automáticas</h2>
+            <p className="text-sm mb-4">
+              Em sua mensagem você pode utilizar as seguintes escritas
+              automáticas, para utilizar as informações dos leads com
+              preenchimento automático.
+            </p>
+          </section>
         </div>
+
+        <section className="flex flex-col">
+          <p>Mensagem</p>
+          <div className="w-full flex items-center justify-center border py-9 rounded-lg">
+            <button className="border bg-transparent rounded-lg flex px-2 items-center py-2 gap-2">
+              <FaPlusCircle className="" /> Adicionar bloco
+            </button>
+          </div>
+        </section>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Agendar data e hora limite?

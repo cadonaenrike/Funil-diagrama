@@ -11,24 +11,31 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import { useCallback } from "react";
-
-import Navbar from "../components/navbar/Navbar";
 import { Square } from "../components/nodes/Campanhas";
 import { Create } from "../components/nodes/Leads";
-import { Funnel } from "../components/nodes/Funil";
+import { Aquecimento } from "../components/nodes/Aquecimento";
 import { WhatsApp } from "../components/nodes/WhatsApp";
 import { Timer } from "../components/nodes/Timer";
 import { Tag } from "../components/nodes/Tags";
 import { NodeType } from "../configs/types/NodeType";
+import { Start } from "../components/nodes/Start";
+import { Sucesso } from "../components/nodes/Sucesso";
 import * as React from "react";
+import NavbarProps from "../components/navbar/NavbarProps";
+import { FaFunnelDollar, FaUser, FaWhatsapp, FaTag } from "react-icons/fa";
+import { TfiTimer } from "react-icons/tfi";
+import check from "../../public/images/Check.svg";
+import start from "../../public/images/Start.svg";
 
 const node_type = {
   square: Square,
   create: Create,
-  funnel: Funnel,
+  aquecimento: Aquecimento,
   whatsApp: WhatsApp,
   timer: Timer,
   tag: Tag,
+  inicio: Start,
+  success: Sucesso,
 };
 
 function SMSFlux() {
@@ -42,6 +49,24 @@ function SMSFlux() {
     },
     [setEdges]
   );
+
+  const menuItems = [
+    {
+      label: "Start",
+      type: "inicio",
+      icon: <img src={start} className="invert" width={25} height={25} />,
+    },
+    { label: "Funil", type: "funnel", icon: <FaFunnelDollar /> },
+    { label: "Leads", type: "create", icon: <FaUser /> },
+    { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
+    { label: "Timer", type: "timer", icon: <TfiTimer /> },
+    { label: "Tag", type: "tag", icon: <FaTag /> },
+    {
+      label: "Sucesso",
+      type: "success",
+      icon: <img src={check} height={25} width={25} />,
+    },
+  ];
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 
@@ -95,7 +120,7 @@ function SMSFlux() {
         />
       </ReactFlow>
 
-      <Navbar onMenuItemClick={onMenuItemClick} />
+      <NavbarProps menuItems={menuItems} onMenuItemClick={onMenuItemClick} />
     </div>
   );
 }

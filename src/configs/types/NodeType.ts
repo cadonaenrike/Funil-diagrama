@@ -3,7 +3,7 @@ export interface NodeType {
   id: string;
   type:
     | "square"
-    | "funnel"
+    | "aquecimento"
     | "create"
     | "whatsApp"
     | "timer"
