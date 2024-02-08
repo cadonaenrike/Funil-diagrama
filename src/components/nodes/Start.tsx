@@ -71,7 +71,7 @@ export function Start({ id, onRemove }: SequenciaWhatsAppProps) {
               id="right"
               position={Position.Right}
               type="source"
-              className="right-3 w-3 h-3 top-9"
+              className="w-3 h-3 top-9"
             />
           </section>
           <span className="font-bold text-center text-white">

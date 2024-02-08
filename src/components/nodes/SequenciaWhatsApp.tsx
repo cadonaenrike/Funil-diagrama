@@ -94,13 +94,13 @@ export function SequenciaWhatsApp({ id, onRemove }: SequenciaWhatsAppProps) {
             id="left"
             position={Position.Left}
             type="target"
-            className="left-11 w-3 h-3 top-7"
+            className="left-5 w-3 h-3 top-7"
           />
           <Handle
             id="right"
             position={Position.Right}
             type="source"
-            className="right-11 w-3 h-3 top-7"
+            className="right-5 w-3 h-3 top-7"
           />
           <DropDown
             onClickButtonCopy={() => {

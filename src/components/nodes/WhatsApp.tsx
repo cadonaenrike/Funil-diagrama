@@ -70,7 +70,7 @@ export function WhatsApp() {
     <>
       {!isRemoved && (
         <div
-          className="h-50 p-2 flex flex-col items-center"
+          className="h-50 p-2 flex flex-col items-center text-white"
           onClick={handleNodeClick}
           onAuxClick={handleOtherClick}
         >
@@ -82,13 +82,13 @@ export function WhatsApp() {
               id="right"
               position={Position.Right}
               type="source"
-              className="right-0 w-3 h-3 top-9"
+              className="-right-3 w-3 h-3 top-9"
             />
             <Handle
               id="left"
               position={Position.Left}
               type="source"
-              className="left-0 w-3 h-3 top-9"
+              className="-left-3 w-3 h-3 top-9"
             />
           </section>
           <span className="font-bold text-center">WhatsApp</span>

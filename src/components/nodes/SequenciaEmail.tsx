@@ -84,7 +84,13 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
             id="right"
             position={Position.Right}
             type="target"
-            className="right-4 w-3 h-3 top-7"
+            className="w-3 h-3 top-7"
+          />
+          <Handle
+            id="right"
+            position={Position.Left}
+            type="target"
+            className="w-3 h-3 top-7"
           />
           <DropDown
             onClickButtonCopy={() => {

@@ -55,9 +55,11 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
     }
   };
 
-  const handleNodeClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setModalOpen(true);
+  const handleNodeClick = () => {
+    if (!isRemoved) {
+      // Abrir o modal quando o nó for clicado
+      setModalOpen(false);
+    }
   };
 
   const closeModal = () => {
@@ -88,40 +90,41 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
   return (
     <>
       {!isRemoved && (
-        <div className="relative flex">
-          <div
-            className="h-50 p-2 flex flex-col items-center cursor-pointer"
-            onContextMenu={handleNodeClickContext}
-            onClick={handleNodeClick}
-          >
-            <section className="bg-black rounded-lg w-16 flex items-center h-14 justify-center bg-opacity-90">
-              <TfiTimer size={32} className="text-white" />
-            </section>
-            <section>
-              <Handle
-                id="right"
-                position={Position.Right}
-                type="source"
-                className="right-6 w-3 h-3 top-9"
-              />
-              <Handle
-                id="left"
-                position={Position.Left}
-                type="source"
-                className="left-6 w-3 h-3 top-9"
-              />
-            </section>
-            <span className="font-bold text-center">Configurar Timer</span>
-          </div>
-          <section className="absolute right-[75px] bottom-5">
-            <DropDown
-              isOpen={isDrowOpen}
-              onClickButton={handleRemoveFromScreen}
-              onClickButtonCopy={() => {}}
-              onClickButtonExport={() => {}}
-              toggleDropDown={() => setDrowOpen(false)}
-            />
+        <div
+          className="h-50 p-2 flex flex-col items-center text-white"
+          onClick={handleNodeClick}
+          onContextMenu={handleNodeClickContext}
+        >
+          <section className="bg-black rounded-lg w-16 h-14 flex items-center justify-center bg-opacity-90">
+            <TfiTimer size={32} className="text-white" />
           </section>
+
+          <span className="font-bold text-center text-white">
+            Configurar Timer
+          </span>
+          <DropDown
+            onClickButtonCopy={() => {
+              console.log("clicou");
+            }}
+            onClickButtonExport={() => {
+              console.log("clicou");
+            }}
+            onClickButton={handleRemoveFromScreen}
+            isOpen={isDrowOpen}
+            toggleDropDown={() => setDrowOpen(false)}
+          />
+          <Handle
+            id="right"
+            position={Position.Right}
+            type="source"
+            className="right-3 w-3 h-3 top-9"
+          />
+          <Handle
+            id="left"
+            position={Position.Left}
+            type="source"
+            className="left-3 w-3 h-3 top-9"
+          />
         </div>
       )}
       <Modal

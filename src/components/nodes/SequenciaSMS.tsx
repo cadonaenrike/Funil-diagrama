@@ -85,13 +85,13 @@ export function SequenciaSMS({ id, onRemove }: SequenciaSMSProps) {
             id="left"
             position={Position.Left}
             type="target"
-            className="left-4 w-3 h-3 top-7"
+            className="w-3 h-3 top-7"
           />
           <Handle
             id="right"
             position={Position.Right}
             type="source"
-            className="right-4 w-3 h-3 top-7"
+            className="w-3 h-3 top-7"
           />
           <DropDown
             isOpen={isDropdown}

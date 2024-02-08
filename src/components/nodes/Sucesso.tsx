@@ -109,13 +109,13 @@ export function Sucesso({ id, onRemove }: SequenciaTimeProps) {
             id="right"
             position={Position.Right}
             type="source"
-            className="-right-1 w-3 h-3 top-9"
+            className="-right-3 w-3 h-3 top-9"
           />
           <Handle
             id="left"
             position={Position.Left}
             type="source"
-            className="-left-1 w-3 h-3 top-9"
+            className="-left-3 w-3 h-3 top-9"
           />
         </div>
       )}

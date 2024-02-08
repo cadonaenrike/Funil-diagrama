@@ -91,11 +91,12 @@ const Navbar: React.FC<NavbarProps> = ({
       </h2>
       {pares.map((pair, index) => (
         <div key={index}>
-          <div className="flex flex-col items-center my-2" draggable="false">
-            <div className="w-full border-t border-zinc-500"></div>
-            <span className="text-center text-xs transform -translate-y-1/2 px-4">
+          <div className="flex items-center my-2" draggable="false">
+            <div className="w-14 border-t border-zinc-500"></div>
+            <span className="text-center text-xs px-1">
               {configuracaoLinha.nomesLinhas[index]}
             </span>
+            <div className="w-14 border-t border-zinc-500"></div>
           </div>
           <div className="flex items-center justify-center gap-5">
             {pair.map((menuItem) => (
