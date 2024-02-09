@@ -1,26 +1,61 @@
-import { useState } from "react";
-import { FaPlusCircle, FaWhatsapp } from "react-icons/fa";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useRef, useState } from "react";
+import { FaPlusCircle, FaRegClock, FaWhatsapp } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
 import { Handle, Position } from "reactflow";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import ToggleSwitch from "../toggleSwitch/toggleSwitch";
 
 Modal.setAppElement("#root");
+
+interface ToggleSwitch {
+  toggle1: boolean;
+  toggle2: boolean;
+  toggle3: boolean;
+  toggle4: boolean;
+  toggle5: boolean;
+}
+
+const initialToggle = {
+  toggle1: false,
+  toggle2: false,
+  toggle3: false,
+  toggle4: false,
+  toggle5: false,
+};
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function WhatsApp() {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [scheduledTime, setScheduledTime] = useState("");
-  const [scheduledDate, setScheduledDate] = useState("");
   const [attachment, setAttachment] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const textoCopiar = useRef<HTMLParagraphElement>(null);
+  const [toggle, setToggle] = useState<ToggleSwitch>(initialToggle);
 
   const handleNodeClick = () => {
     if (!isRemoved) {
       setModalOpen(true);
     }
+  };
+
+  const copyText = (texto: string) => {
+    navigator.clipboard
+      .writeText(texto)
+      .then(() => {
+        console.log("Texto copiado", texto);
+      })
+      .catch((error) => {
+        console.error("Erro ao copiar", error);
+      });
+  };
+
+  const handleNomeClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const texto = e.currentTarget.textContent || "";
+    copyText(texto);
   };
 
   const handleOtherClick = (e: { preventDefault: () => void }) => {
@@ -32,16 +67,11 @@ export function WhatsApp() {
     setModalOpen(false);
   };
 
-  const handleScheduledTimeChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setScheduledTime(e.target.value);
-  };
-
-  const handleScheduledDateChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setScheduledDate(e.target.value);
+  const handleToggleChange = (toggleName: string) => {
+    setToggle((prevToggles: any) => ({
+      ...prevToggles,
+      [toggleName]: !prevToggles[toggleName],
+    }));
   };
 
   const handleAttachmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,8 +79,6 @@ export function WhatsApp() {
   };
 
   const handleSend = () => {
-    console.log("Data agendada:", scheduledDate);
-    console.log("Hora agendada:", scheduledTime);
     console.log("Anexo:", attachment);
 
     closeModal();
@@ -122,6 +150,56 @@ export function WhatsApp() {
               Em sua mensagem você pode utilizar as seguintes escritas
               automáticas, para utilizar as informações dos leads com
               preenchimento automático.
+              <br />
+              <span
+                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
+                ref={textoCopiar}
+                onClick={handleNomeClick}
+              >
+                &#123;&#123;nome&#125;&#125;
+              </span>
+              <span
+                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
+                ref={textoCopiar}
+                onClick={handleNomeClick}
+              >
+                &#123;&#123;pix&#125;&#125;
+              </span>
+              <span
+                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
+                ref={textoCopiar}
+                onClick={handleNomeClick}
+              >
+                &#123;&#123;boleto&#125;&#125;
+              </span>
+              <span
+                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
+                ref={textoCopiar}
+                onClick={handleNomeClick}
+              >
+                &#123;&#123;telefone&#125;&#125;
+              </span>
+              <span
+                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
+                ref={textoCopiar}
+                onClick={handleNomeClick}
+              >
+                &#123;&#123;email&#125;&#125;
+              </span>
+              <span
+                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
+                ref={textoCopiar}
+                onClick={handleNomeClick}
+              >
+                &#123;&#123;primero_nome&#125;&#125;
+              </span>
+              <span
+                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
+                ref={textoCopiar}
+                onClick={handleNomeClick}
+              >
+                &#123;&#123;rastreamento&#125;&#125;
+              </span>
             </p>
           </section>
         </div>
@@ -129,28 +207,80 @@ export function WhatsApp() {
         <section className="flex flex-col">
           <p>Mensagem</p>
           <div className="w-full flex items-center justify-center border py-9 rounded-lg">
-            <button className="border bg-transparent rounded-lg flex px-2 items-center py-2 gap-2">
+            <button className="border bg-transparent rounded-md flex px-7 items-center py-1 gap-2 text-sm">
               <FaPlusCircle className="" /> Adicionar bloco
             </button>
           </div>
         </section>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Agendar data e hora limite?
-          </label>
-          <input
-            type="date"
-            value={scheduledDate}
-            onChange={handleScheduledDateChange}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-          <input
-            type="time"
-            value={scheduledTime}
-            onChange={handleScheduledTimeChange}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-        </div>
+
+        <section className="bg-[#071318] rounded-lg flex flex-col px-3 py-3 gap-3 mt-7">
+          <section className="flex gap-3 relative">
+            <FaRegClock className="text-cyan-600 text-xl" />
+            <section>
+              <h2>Agendar data e hora limite?</h2>
+              <span className="text-xs">
+                A etapa vai enviar as mensagens aos leads até uma data e hora
+                determinada.
+              </span>
+            </section>
+            <section className="absolute right-0">
+              <ToggleSwitch
+                toggle={toggle.toggle1}
+                setToggle={() => handleToggleChange("toggle1")}
+              />
+            </section>
+          </section>
+          {toggle.toggle1 && (
+            <input
+              type="datetime-local"
+              className="bg-transparent rounded-lg"
+            />
+          )}
+        </section>
+
+        <section className="bg-[#071318] rounded-lg flex flex-col px-3 py-3 gap-3 mt-7">
+          <section className="flex gap-3 w-full relative">
+            <BsThreeDots className="text-cyan-600 text-xl" />
+            <section>
+              <h2>Agendar um intervalo de tempo?</h2>
+              <span className="text-xs">
+                A etapa vai enviar as mensagens aos leads somente no intervalo
+                de tempo definido abaixo.
+              </span>
+            </section>
+            <section className="absolute right-0">
+              <ToggleSwitch
+                toggle={toggle.toggle2}
+                setToggle={() => handleToggleChange("toggle2")}
+              />
+            </section>
+          </section>
+          {toggle.toggle2 && (
+            <section className="flex ml-8 gap-5">
+              <section className="flex flex-col">
+                <label htmlFor="inicia" className="text-base">
+                  Inicar às:
+                </label>
+                <input
+                  type="time"
+                  name="inicia"
+                  className="bg-transparent rounded-lg"
+                />
+              </section>
+              <section className="flex flex-col">
+                <label htmlFor="termina" className="text-base">
+                  Terminar às:
+                </label>
+                <input
+                  type="time"
+                  name="termina"
+                  className="bg-transparent rounded-lg"
+                />
+              </section>
+            </section>
+          )}
+        </section>
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Anexar arquivo:
