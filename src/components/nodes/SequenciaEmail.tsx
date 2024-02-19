@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import { DropDown } from "../dropdawn/DropDawn";
 import sequenciaemail from "../../../public/images/sequenciaemail.png";
+import { useNavigate } from "react-router-dom";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
@@ -22,14 +23,19 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
   const [selectedOption, setSelectedOption] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const navigator = useNavigate();
 
-  const handleNodeClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleNodeClickContext = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!isRemoved) {
       // Abrir o modal quando o nó for clicado
       setDrowOpen(!isDrowOpen);
     }
+  };
+
+  const handleNodeClick = () => {
+    navigator("/SequenciaEmail");
   };
 
   const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
@@ -65,7 +71,7 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
       {!isRemoved && (
         <div
           className="h-50 p-2 flex flex-col items-center "
-          onContextMenu={handleNodeClick}
+          onContextMenu={handleNodeClickContext}
           onClick={handleNodeClick}
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#774E30] rounded-lg">

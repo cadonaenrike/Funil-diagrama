@@ -22,12 +22,15 @@ import { Start } from "../components/nodes/Start";
 import { Sucesso } from "../components/nodes/Sucesso";
 import * as React from "react";
 import NavbarProps from "../components/navbar/NavbarProps";
-import { FaFunnelDollar, FaUser, FaWhatsapp, FaTag } from "react-icons/fa";
+import { FaUser, FaWhatsapp, FaTag } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import check from "../../public/images/Check.svg";
 import start from "../../public/images/Start.svg";
+import { SMS } from "../components/nodes/SMS";
+import sms from "../../public/images/sms.svg";
 
 const node_type = {
+  sms: SMS,
   square: Square,
   create: Create,
   aquecimento: Aquecimento,
@@ -56,7 +59,11 @@ function SMSFlux() {
       type: "inicio",
       icon: <img src={start} className="invert" width={25} height={25} />,
     },
-    { label: "Funil", type: "funnel", icon: <FaFunnelDollar /> },
+    {
+      label: "SMS",
+      type: "sms",
+      icon: <img src={sms} width={25} height={25} />,
+    },
     { label: "Leads", type: "create", icon: <FaUser /> },
     { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
     { label: "Timer", type: "timer", icon: <TfiTimer /> },
