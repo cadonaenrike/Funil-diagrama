@@ -106,7 +106,7 @@ const NavbarPropsMista: React.FC<NavbarProps> = ({
                 onDragStart={(e) => handleDragStart(e, menuItem)}
                 key={menuItem.type}
                 onClick={() => handleMenuItemClick(menuItem)}
-                className="focus:outline-none hover:text-sky-600 mb-4 flex w-14 flex-col items-center"
+                className="focus:outline-none hover:text-sky-600 mb-2 flex w-14 flex-col items-center"
               >
                 {menuItem.icon}
                 <p className="mt-2 whitespace-normal w-auto text-sm">
