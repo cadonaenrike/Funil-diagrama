@@ -4,6 +4,7 @@ import ReactFlow, {
   Connection,
   ConnectionMode,
   Controls,
+  NodeProps,
   addEdge,
   useEdgesState,
   useNodesState,
@@ -29,9 +30,11 @@ import start from "../../public/images/Start.svg";
 import aquecimento from "../../public/images/aquecimento.svg";
 import addtag from "../../public/images/addtag.svg";
 import removerTag from "../../public/images/removeTag.svg";
+import tag from "../../public/images/tag.svg";
 import falha from "../../public/images/falha.svg";
 import { Falha } from "../components/nodes/Falha";
 import { RemoverTag } from "../components/nodes/RemoverTag";
+import { Tag } from "../components/nodes/Tags";
 
 const node_type = {
   square: Square,
@@ -43,11 +46,24 @@ const node_type = {
   addTag: AddTag,
   falha: Falha,
   removerTag: RemoverTag,
+  tag: Tag,
 };
 
 function WhatsAppFlux() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
+
+  const removeNode = useCallback(
+    (nodeId: string) => {
+      setNodes((prevNodes) => prevNodes.filter((node) => node.id !== nodeId));
+      setEdges((prevEdges) =>
+        prevEdges.filter(
+          (edge) => edge.source !== nodeId && edge.target !== nodeId
+        )
+      );
+    },
+    [setNodes, setEdges]
+  );
 
   const menuItems = [
     {
@@ -82,7 +98,35 @@ function WhatsAppFlux() {
       type: "falha",
       icon: <img src={falha} height={25} width={25} />,
     },
+    {
+      label: "Tag",
+      type: "tag",
+      icon: <img src={tag} height={25} width={25} />,
+    },
   ];
+
+  const memoizedNodeTypes = React.useMemo(
+    () => ({
+      ...node_type,
+      timer: (props: NodeProps) => <Timer {...props} onRemove={removeNode} />,
+      tag: (props: NodeProps) => <Tag {...props} onRemove={removeNode} />,
+      // whatsApp: (props: NodeProps) => (
+      //   <WhatsApp {...props} onRemove={removeNode} />
+      // ),
+      addTag: (props: NodeProps) => <AddTag {...props} onRemove={removeNode} />,
+      removerTag: (props: NodeProps) => (
+        <RemoverTag {...props} onRemove={removeNode} />
+      ),
+      success: (props: NodeProps) => (
+        <Sucesso {...props} onRemove={removeNode} />
+      ),
+      falha: (props: NodeProps) => <Falha {...props} onRemove={removeNode} />,
+      aquecimento: (props: NodeProps) => (
+        <Aquecimento {...props} onRemove={removeNode} />
+      ),
+    }),
+    [removeNode]
+  );
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -129,7 +173,7 @@ function WhatsAppFlux() {
       onDragOver={handleNodeDragOver}
     >
       <ReactFlow
-        nodeTypes={node_type}
+        nodeTypes={memoizedNodeTypes}
         nodes={nodes}
         edges={edges}
         onEdgesChange={onEdgesChange}

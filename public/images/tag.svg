@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
+    <script xmlns="" async="false" type="text/javascript"
+        src="chrome-extension://fnjhmkhhmkbjkkabndcnnogagogbneec/in-page.js" />
+    <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M41 26.2452L26.2435 41L1.01391 15.7739L1 1H15.7687L41 26.2452V26.2452Z" stroke="#ffffff" stroke-width="2"
+        stroke-linejoin="round" />
+    <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M13.1738 9.69506C13.1738 11.6151 11.6155 13.1733 9.69555 13.1733C7.77555 13.1733 6.21729 11.6151 6.21729 9.69506C6.21729 7.77506 7.77555 6.2168 9.69555 6.2168C11.6155 6.2168 13.1738 7.77506 13.1738 9.69506V9.69506Z"
+        stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
+</svg>

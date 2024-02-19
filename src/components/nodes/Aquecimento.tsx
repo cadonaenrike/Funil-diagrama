@@ -8,6 +8,7 @@ import aquecimento from "../../../public/images/aquecimento.svg";
 import ToggleSwitch from "../toggleSwitch/toggleSwitch";
 import { RiBarcodeBoxLine } from "react-icons/ri";
 import { FaRegCalendar } from "react-icons/fa";
+import { DropDown } from "../dropdawn/DropDawn";
 
 Modal.setAppElement("#root"); // Defina o elemento raiz do seu aplicativo
 
@@ -27,17 +28,29 @@ const initialToggle = {
   toggle5: false,
 };
 
+interface AquecimentoProps {
+  id: string;
+  onRemove: (nodeId: string) => void;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Aquecimento() {
+export function Aquecimento({ id, onRemove }: AquecimentoProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalDescription, setModalDescription] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const [isDropDown, setDropDown] = useState(false);
   const [toggle, setToggle] = useState<ToggleSwitch>(initialToggle);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleItemClick = (index: number) => {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  const handleNodeClickContext = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isRemoved) setDropDown(!isDropDown);
   };
 
   const handleAutoNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,8 +72,10 @@ export function Aquecimento() {
     }
   };
 
-  const handleRemoveFromScreen = () => {
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     setIsRemoved(true);
+    if (onRemove) onRemove(id);
     closeModal();
   };
 
@@ -95,6 +110,7 @@ export function Aquecimento() {
         <div
           className="h-50 p-2 flex flex-col items-center text-white "
           onClick={handleNodeClick}
+          onContextMenu={handleNodeClickContext}
         >
           <section className="w-16 h-14 flex items-center justify-center bg-slate-700 rounded-lg bg-[#6F2C38] opacity-90">
             <img src={aquecimento} width={32} height={32} />
@@ -102,6 +118,17 @@ export function Aquecimento() {
           <span className="font-bold text-center">
             {modalTitle || "Aquecimento"}
           </span>
+          <DropDown
+            isOpen={isDropDown}
+            toggleDropDown={() => setDropDown(!isDropDown)}
+            onClickButton={handleRemoveFromScreen}
+            onClickButtonCopy={() => {
+              console.log("Copiar");
+            }}
+            onClickButtonExport={() => {
+              console.log("Exportar");
+            }}
+          />
 
           <Handle
             id="right"
@@ -331,24 +358,12 @@ export function Aquecimento() {
             </div>
           </div>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex justify-end -mr-2 mt-4">
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+            className="px-4 py-2 bg-[#046a04] text-white rounded-md hover:bg-[#227422] focus:outline-none focus:ring focus:border-blue-300 mr-2"
           >
             Salvar
-          </button>
-          <button
-            onClick={closeModal}
-            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-500"
-          >
-            Fechar
-          </button>
-          <button
-            onClick={handleRemoveFromScreen}
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
-          >
-            Remover da Tela
           </button>
         </div>
       </Modal>

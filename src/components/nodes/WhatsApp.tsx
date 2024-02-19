@@ -12,6 +12,7 @@ import ToggleSwitch from "../toggleSwitch/toggleSwitch";
 import { DropDownBloco } from "../dropdawn/DropDawnBloco";
 import { Texto } from "../blocos/Texto";
 import { Arquivos } from "../blocos/Arquivos";
+import { DropDown } from "../dropdawn/DropDawn";
 
 Modal.setAppElement("#root");
 
@@ -31,11 +32,17 @@ const initialToggle = {
   toggle5: false,
 };
 
+interface WhatsAppProps {
+  id: string;
+  onRemove: (nodeId: string) => void;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function WhatsApp() {
+export function WhatsApp({ id, onRemove }: WhatsAppProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [attachment, setAttachment] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const [isDropdown, setDropdown] = useState(false);
   const [drop, setDrop] = useState(false);
   const [isBlock, setIsBlock] = useState<JSX.Element[]>([]);
   const textoCopiar = useRef<HTMLParagraphElement>(null);
@@ -95,9 +102,13 @@ export function WhatsApp() {
     copyText(texto);
   };
 
-  const handleOtherClick = (e: { preventDefault: () => void }) => {
+  const handleOtherClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    console.log("teste");
+    e.stopPropagation();
+    if (!isRemoved) {
+      // Abrir o modal quando o nó for clicado
+      setDropdown(!isDropdown);
+    }
   };
 
   const closeModal = () => {
@@ -121,8 +132,10 @@ export function WhatsApp() {
     closeModal();
   };
 
-  const handleRemoveFromScreen = () => {
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     setIsRemoved(true);
+    if (onRemove) onRemove(id);
     closeModal();
   };
 
@@ -132,7 +145,7 @@ export function WhatsApp() {
         <div
           className="h-50 p-2 flex flex-col items-center text-white"
           onClick={handleNodeClick}
-          onAuxClick={handleOtherClick}
+          onContextMenu={handleOtherClick}
         >
           <section className="bg-green-600 rounded-lg w-16 flex items-center h-14 justify-center">
             <FaWhatsapp size={32} className="text-white" />
@@ -152,6 +165,17 @@ export function WhatsApp() {
             />
           </section>
           <span className="font-bold text-center">WhatsApp</span>
+          <DropDown
+            onClickButtonCopy={() => {
+              console.log("clicou");
+            }}
+            onClickButtonExport={() => {
+              console.log("clicou");
+            }}
+            onClickButton={handleRemoveFromScreen}
+            isOpen={isDropdown}
+            toggleDropDown={() => setDropdown(false)}
+          />
         </div>
       )}
       <Modal
@@ -353,13 +377,6 @@ export function WhatsApp() {
             className="px-4 py-2 bg-[#046a04] text-white rounded-md hover:bg-[#379737] focus:outline-none focus:ring focus:border-blue-300"
           >
             Salvar
-          </button>
-
-          <button
-            onClick={handleRemoveFromScreen}
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
-          >
-            Remover da Tela
           </button>
         </div>
       </Modal>
