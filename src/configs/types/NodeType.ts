@@ -11,6 +11,7 @@ export interface NodeType {
     | "tag"
     | "seqmista"
     | "seqwhatsapp"
+    | "emailmarketing"
     | "seqsms"
     | "sms"
     | "seqemail"

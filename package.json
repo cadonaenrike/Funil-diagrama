@@ -24,6 +24,7 @@
     "preline": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-email-editor": "^1.7.9",
     "react-flow-renderer": "^10.3.17",
     "react-icons": "^4.12.0",
     "react-modal": "^3.16.1",

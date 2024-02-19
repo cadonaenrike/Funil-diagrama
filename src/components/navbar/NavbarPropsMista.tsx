@@ -81,7 +81,7 @@ const NavbarPropsMista: React.FC<NavbarProps> = ({
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="whitespace-nowrap h-11/12 text-white overflow-auto text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 flex flex-col justify-evenly"
+      className="whitespace-nowrap text-white overflow-auto text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 flex flex-col justify-evenly"
     >
       <h2
         className="text-lg mb-4 text-center"

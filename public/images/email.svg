@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="28" viewBox="0 0 40 28" fill="none">
+    <script xmlns="" async="false" type="text/javascript"
+        src="chrome-extension://fnjhmkhhmkbjkkabndcnnogagogbneec/in-page.js" />
+    <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M39 23.619C39 25.1173 37.784 26.3333 36.2857 26.3333H3.71429C2.216 26.3333 1 25.1173 1 23.619V3.71429C1 2.21419 2.216 1 3.71429 1H36.2857C37.784 1 39 2.21419 39 3.71429V23.619V23.619Z"
+        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M38.0957 1.90625L20.0005 16.3824L1.90527 1.90625" stroke="white" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+</svg>

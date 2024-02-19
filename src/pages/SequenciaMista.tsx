@@ -36,9 +36,12 @@ import { RemoverTag } from "../components/nodes/RemoverTag";
 import addTag from "../../public/images/addTag.svg";
 import removerTag from "../../public/images/removeTag.svg";
 import falha from "../../public/images/falha.svg";
+import emailMarketing from "../../public/images/email.svg";
+import { EmailMarketing } from "../components/nodes/EmailMarketing";
 
 const node_type = {
   falha: Falha,
+  emailmarketing: EmailMarketing,
   addTag: AddTag,
   removerTag: RemoverTag,
   square: Square,
@@ -82,9 +85,12 @@ function SequenciaMista() {
       type: "sms",
       icon: <img src={sms} width={25} height={25} />,
     },
+    {
+      label: "Marketing",
+      type: "emailmarketing",
+      icon: <img src={emailMarketing} width={25} height={25} />,
+    },
     { label: "Leads", type: "create", icon: <FaUser /> },
-    { label: "Tag", type: "tag", icon: <FaTag /> },
-
     {
       label: "Add Tag",
       type: "addTag",
@@ -105,6 +111,7 @@ function SequenciaMista() {
       type: "falha",
       icon: <img src={falha} height={25} width={25} />,
     },
+    { label: "Tag", type: "tag", icon: <FaTag /> },
   ];
 
   const removeNode = useCallback(
@@ -130,12 +137,15 @@ function SequenciaMista() {
         <Aquecimento {...props} onRemove={removeNode} />
       ),
       removerTag: (props: NodeProps) => (
-        <SMS {...props} onRemove={removeNode} />
+        <RemoverTag {...props} onRemove={removeNode} />
       ),
       success: (props: NodeProps) => (
         <Sucesso {...props} onRemove={removeNode} />
       ),
       falha: (props: NodeProps) => <Falha {...props} onRemove={removeNode} />,
+      emailmarketing: (props: NodeProps) => (
+        <EmailMarketing {...props} onRemove={removeNode} />
+      ),
       aquecimento: (props: NodeProps) => (
         <Aquecimento {...props} onRemove={removeNode} />
       ),
