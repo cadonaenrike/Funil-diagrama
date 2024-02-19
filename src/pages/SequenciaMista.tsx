@@ -133,9 +133,7 @@ function SequenciaMista() {
       whatsApp: (props: NodeProps) => (
         <WhatsApp {...props} onRemove={removeNode} />
       ),
-      addTag: (props: NodeProps) => (
-        <Aquecimento {...props} onRemove={removeNode} />
-      ),
+      addTag: (props: NodeProps) => <AddTag {...props} onRemove={removeNode} />,
       removerTag: (props: NodeProps) => (
         <RemoverTag {...props} onRemove={removeNode} />
       ),
