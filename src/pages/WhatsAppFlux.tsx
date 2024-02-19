@@ -110,9 +110,9 @@ function WhatsAppFlux() {
       ...node_type,
       timer: (props: NodeProps) => <Timer {...props} onRemove={removeNode} />,
       tag: (props: NodeProps) => <Tag {...props} onRemove={removeNode} />,
-      // whatsApp: (props: NodeProps) => (
-      //   <WhatsApp {...props} onRemove={removeNode} />
-      // ),
+      whatsApp: (props: NodeProps) => (
+        <WhatsApp {...props} onRemove={removeNode} />
+      ),
       addTag: (props: NodeProps) => <AddTag {...props} onRemove={removeNode} />,
       removerTag: (props: NodeProps) => (
         <RemoverTag {...props} onRemove={removeNode} />

@@ -15,7 +15,7 @@ interface ConfiguracaoLinha {
   nomesLinhas: string[];
 }
 
-const NavbarProps: React.FC<NavbarProps> = ({
+const NavbarPropsMista: React.FC<NavbarProps> = ({
   onMenuItemClick,
   menuItems,
 }: NavbarProps) => {
@@ -63,9 +63,9 @@ const NavbarProps: React.FC<NavbarProps> = ({
   };
 
   const configuracaoLinha: ConfiguracaoLinha = {
-    itensPorLinha: [1, 2, 1, 2, 3], // Definir o número de itens por linha
+    itensPorLinha: [1, 2, 4, 2, 4], // Definir o número de itens por linha
     nomesLinhas: [
-      "início",
+      "Início",
       "Controles",
       "Disparos",
       "Ações",
@@ -123,4 +123,4 @@ const NavbarProps: React.FC<NavbarProps> = ({
   );
 };
 
-export default NavbarProps;
+export default NavbarPropsMista;

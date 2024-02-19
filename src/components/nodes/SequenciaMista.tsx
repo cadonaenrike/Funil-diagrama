@@ -35,11 +35,11 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
   };
 
   const handleNode = () => {
-    navigate('/SMSFlux')
-    if(!onRemove){
-      setModalOpen(true)
+    navigate("/SequenciaMista");
+    if (!onRemove) {
+      setModalOpen(true);
     }
-  }
+  };
 
   const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();

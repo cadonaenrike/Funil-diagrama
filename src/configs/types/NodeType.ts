@@ -12,6 +12,7 @@ export interface NodeType {
     | "seqmista"
     | "seqwhatsapp"
     | "seqsms"
+    | "sms"
     | "seqemail"
     | "success"
     | "inicio"
