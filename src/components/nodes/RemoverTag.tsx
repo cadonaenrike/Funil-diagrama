@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { IoMdPricetag } from "react-icons/io";
 import { Handle, Position } from "reactflow";
-
+import addTag from "../../../public/images/addTag.svg";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
@@ -9,7 +8,7 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Tag() {
+export function RemoverTag() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedTagName, setSelectedTagName] = useState("");
@@ -49,11 +48,11 @@ export function Tag() {
     <>
       {!isRemoved && (
         <div
-          className="h-50 p-2 rounded flex flex-col items-center"
+          className="h-50 p-2 rounded flex flex-col items-center text-white"
           onClick={handleNodeClick}
         >
-          <section className="w-16 h-14 bg-amber-700 rounded-lg flex items-center justify-center">
-            <IoMdPricetag size={32} className="text-white" />
+          <section className="w-16 h-14 bg-[#113668] rounded-lg flex items-center justify-center">
+            <img src={addTag} width={32} height={32} className="text-white" />
           </section>
           <section>
             <Handle
@@ -86,38 +85,41 @@ export function Tag() {
             marginRight: "-50%",
             transform: "translate(-50%, -50%)",
             borderRadius: "8px",
+            border: "none",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            background: "#fff",
+            background: "#000000",
             padding: "20px",
-            maxWidth: "400px",
+            maxWidth: "700px",
+            color: "#FFFFFF",
           },
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.767)",
             overflow: "auto",
           },
         }}
       >
-        <div className="bg-white rounded-md overflow-hidden">
+        <div className="rounded-md overflow-hidden">
           <div className="p-4">
-            <h2 className="text-2xl font-bold mb-2">Adicionar</h2>
+            <h2 className="text-2xl font-bold mb-2">Remover</h2>
             <p className="text-gray-700 mb-4">
-              Ao passar nessa etapa do fluxograma, as tags apresentadas abaixo
-              serão ADICIONADAS ao lead.
+              Ao passar nessa etapa do fluxograma, a(s) tag(s) apresentada(s)
+              abaixo serão REMOVIDA(S) do lead.
             </p>
             <h3 className="text-lg font-bold mb-2">
-              Tag(s) para ser adicionada(s) no lead
+              Tag(s) para ser removida(s) no lead
             </h3>
             <select
               value={selectedTags[0]}
               onChange={handleTagChange}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none bg-transparent"
             >
               {tagsOptions.map((tag, index) => (
-                <option key={index} value={tag}>
+                <option style={{ background: "black" }} key={index} value={tag}>
                   {tag}
                 </option>
               ))}
             </select>
+            <button>+</button>
             <div className="flex justify-end mt-4">
               <button
                 onClick={handleSave}

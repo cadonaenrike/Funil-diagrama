@@ -11,70 +11,36 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import { useCallback } from "react";
-
 import { Square } from "../components/nodes/Campanhas";
+import { Create } from "../components/nodes/Leads";
 import { Aquecimento } from "../components/nodes/Aquecimento";
 import { WhatsApp } from "../components/nodes/WhatsApp";
 import { Timer } from "../components/nodes/Timer";
+import { Tag } from "../components/nodes/Tags";
 import { NodeType } from "../configs/types/NodeType";
-import * as React from "react";
-import { FaWhatsapp } from "react-icons/fa";
-import { TfiTimer } from "react-icons/tfi";
-import NavbarProps from "../components/navbar/NavbarProps";
-import { Sucesso } from "../components/nodes/Sucesso";
 import { Start } from "../components/nodes/Start";
-import { AddTag } from "../components/nodes/AddTag";
+import { Sucesso } from "../components/nodes/Sucesso";
+import * as React from "react";
+import NavbarProps from "../components/navbar/NavbarProps";
+import { FaFunnelDollar, FaUser, FaWhatsapp, FaTag } from "react-icons/fa";
+import { TfiTimer } from "react-icons/tfi";
 import check from "../../public/images/Check.svg";
 import start from "../../public/images/Start.svg";
-import aquecimento from "../../public/images/aquecimento.svg";
-import addtag from "../../public/images/addtag.svg";
-import falha from "../../public/images/falha.svg";
-import { Falha } from "../components/nodes/Falha";
 
 const node_type = {
   square: Square,
+  create: Create,
   aquecimento: Aquecimento,
   whatsApp: WhatsApp,
   timer: Timer,
-  success: Sucesso,
+  tag: Tag,
   inicio: Start,
-  addTag: AddTag,
-  falha: Falha,
+  success: Sucesso,
 };
 
-function WhatsAppFlux() {
+function SequenciaMista() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
-
-  const menuItems = [
-    {
-      label: "Start",
-      type: "inicio",
-      icon: <img src={start} className="invert" width={25} height={25} />,
-    },
-    { label: "Timer", type: "timer", icon: <TfiTimer size={25} /> },
-    {
-      label: "Aquecimento",
-      type: "aquecimento",
-      icon: <img src={aquecimento} height={25} width={25} />,
-    },
-    { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp size={25} /> },
-    {
-      label: "Add Tag",
-      type: "addTag",
-      icon: <img src={addtag} height={25} width={25} />,
-    },
-    {
-      label: "Sucesso",
-      type: "success",
-      icon: <img src={check} height={25} width={25} />,
-    },
-    {
-      label: "Falha",
-      type: "falha",
-      icon: <img src={falha} height={25} width={25} />,
-    },
-  ];
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -83,6 +49,24 @@ function WhatsAppFlux() {
     },
     [setEdges]
   );
+
+  const menuItems = [
+    {
+      label: "Start",
+      type: "inicio",
+      icon: <img src={start} className="invert" width={25} height={25} />,
+    },
+    { label: "Funil", type: "funnel", icon: <FaFunnelDollar /> },
+    { label: "Leads", type: "create", icon: <FaUser /> },
+    { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
+    { label: "Timer", type: "timer", icon: <TfiTimer /> },
+    { label: "Tag", type: "tag", icon: <FaTag /> },
+    {
+      label: "Sucesso",
+      type: "success",
+      icon: <img src={check} height={25} width={25} />,
+    },
+  ];
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 
@@ -116,7 +100,7 @@ function WhatsAppFlux() {
 
   return (
     <div
-      className="w-screen h-screen overflow-auto"
+      className="w-screen h-screen"
       onDrop={handleNodeDrop}
       onDragOver={handleNodeDragOver}
     >
@@ -129,10 +113,7 @@ function WhatsAppFlux() {
         onNodesChange={onNodesChange}
         connectionMode={ConnectionMode.Loose}
       >
-        <Background
-          style={{ backgroundColor: "#000", opacity: "0.85" }}
-          className="overflow-auto"
-        />
+        <Background style={{ backgroundColor: "#000", opacity: "0.85" }} />
         <Controls
           style={{ backgroundColor: "#646060" }}
           position="bottom-right"
@@ -144,4 +125,4 @@ function WhatsAppFlux() {
   );
 }
 
-export default WhatsAppFlux;
+export default SequenciaMista;

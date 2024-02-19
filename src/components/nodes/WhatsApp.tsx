@@ -9,6 +9,9 @@ import { Handle, Position } from "reactflow";
 import Modal from "react-modal";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import ToggleSwitch from "../toggleSwitch/toggleSwitch";
+import { DropDownBloco } from "../dropdawn/DropDawnBloco";
+import { Texto } from "../blocos/Texto";
+import { Arquivos } from "../blocos/Arquivos";
 
 Modal.setAppElement("#root");
 
@@ -33,6 +36,8 @@ export function WhatsApp() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [attachment, setAttachment] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const [drop, setDrop] = useState(false);
+  const [isBlock, setIsBlock] = useState<JSX.Element[]>([]);
   const textoCopiar = useRef<HTMLParagraphElement>(null);
   const [toggle, setToggle] = useState<ToggleSwitch>(initialToggle);
 
@@ -40,6 +45,38 @@ export function WhatsApp() {
     if (!isRemoved) {
       setModalOpen(true);
     }
+  };
+
+  const handleAddText = () => {
+    setIsBlock((prevBlocks) => [...prevBlocks, <Texto />]);
+    setDrop(!drop);
+  };
+
+  const handleAddArquivo = () => {
+    setIsBlock((prevBlocks) => [
+      ...prevBlocks,
+      <Arquivos
+        index={prevBlocks.length}
+        moveBlock={moveBlock}
+        blocksLength={prevBlocks.length}
+      />,
+    ]);
+    setDrop(!drop);
+  };
+
+  const moveBlock = (direction: "up" | "down", index: number) => {
+    setIsBlock((prevBlocks) => {
+      const newBlocks = [...prevBlocks];
+      const temp = newBlocks[index];
+      newBlocks[index] = newBlocks[index + (direction === "up" ? -1 : 1)];
+      newBlocks[index + (direction === "up" ? -1 : 1)] = temp;
+      return newBlocks;
+    });
+  };
+
+  const handleAddBlock = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setDrop(!drop);
   };
 
   const copyText = (texto: string) => {
@@ -138,6 +175,7 @@ export function WhatsApp() {
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
           },
         }}
       >
@@ -206,11 +244,28 @@ export function WhatsApp() {
 
         <section className="flex flex-col">
           <p>Mensagem</p>
-          <div className="w-full flex items-center justify-center border py-9 rounded-lg">
-            <button className="border bg-transparent rounded-md flex px-7 items-center py-1 gap-2 text-sm">
+          <div className="w-full flex flex-col gap-2 items-center justify-center border py-9 rounded-lg">
+            {isBlock.map((block, index) => (
+              <div
+                className="w-full flex justify-center items-center flex-col"
+                key={index}
+              >
+                {block}
+              </div>
+            ))}
+            <button
+              onClick={handleAddBlock}
+              className="border bg-transparent rounded-md flex px-7 items-center py-1 gap-2 text-sm"
+            >
               <FaPlusCircle className="" /> Adicionar bloco
             </button>
           </div>
+          <DropDownBloco
+            isOpen={drop}
+            onClickButtonText={handleAddText}
+            onClickButtonArchiver={handleAddArquivo}
+            toggleDropDown={() => setDrop(false)}
+          />
         </section>
 
         <section className="bg-[#071318] rounded-lg flex flex-col px-3 py-3 gap-3 mt-7">
@@ -295,16 +350,11 @@ export function WhatsApp() {
         <div className="flex space-x-4 mt-4">
           <button
             onClick={handleSend}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+            className="px-4 py-2 bg-[#046a04] text-white rounded-md hover:bg-[#379737] focus:outline-none focus:ring focus:border-blue-300"
           >
-            Enviar
+            Salvar
           </button>
-          <button
-            onClick={closeModal}
-            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-500"
-          >
-            Fechar
-          </button>
+
           <button
             onClick={handleRemoveFromScreen}
             className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"

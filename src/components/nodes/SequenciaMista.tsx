@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import fluxmista from "../../../public/images/sequenciamista.png";
 import { DropDown } from "../dropdawn/DropDawn";
+import { useNavigate } from "react-router-dom";
 
 interface SequenciaMistaProps {
   id: string;
@@ -22,6 +23,7 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
   const [selectedOption, setSelectedOption] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const navigate = useNavigate();
 
   const handleNodeClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -31,6 +33,13 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
       setDrowOpen(!isDrowOpen);
     }
   };
+
+  const handleNode = () => {
+    navigate('/SMSFlux')
+    if(!onRemove){
+      setModalOpen(true)
+    }
+  }
 
   const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -67,6 +76,7 @@ export function SequenciaMista({ id, onRemove }: SequenciaMistaProps) {
       {!isRemoved && (
         <div
           className="h-50 p-2 flex flex-col items-center "
+          onClick={handleNode}
           onContextMenu={handleNodeClick}
         >
           <section className="h-10 w-32 flex  items-center justify-center bg-[#aa3333c5] rounded-lg">

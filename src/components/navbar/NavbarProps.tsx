@@ -63,10 +63,11 @@ const NavbarProps: React.FC<NavbarProps> = ({
   };
 
   const configuracaoLinha: ConfiguracaoLinha = {
-    itensPorLinha: [1, 2, 2, 3], // Definir o número de itens por linha
+    itensPorLinha: [1, 2, 1, 2, 3], // Definir o número de itens por linha
     nomesLinhas: [
       "início",
       "Controles",
+      "Disparos",
       "Ações",
       "Condições",
       "Integrar",
@@ -80,7 +81,7 @@ const NavbarProps: React.FC<NavbarProps> = ({
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="whitespace-nowrap text-white overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-4/6 flex flex-col justify-evenly"
+      className="whitespace-nowrap h-auto text-white overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 flex flex-col justify-evenly"
     >
       <h2
         className="text-lg mb-4 text-center"
@@ -98,14 +99,14 @@ const NavbarProps: React.FC<NavbarProps> = ({
             </span>
             <div className="w-14 border-t border-zinc-500"></div>
           </div>
-          <div className="flex items-center justify-center gap-5">
+          <div className="flex items-center justify-center flex-wrap gap-5">
             {pair.map((menuItem) => (
               <button
                 draggable
                 onDragStart={(e) => handleDragStart(e, menuItem)}
                 key={menuItem.type}
                 onClick={() => handleMenuItemClick(menuItem)}
-                className="focus:outline-none hover:text-sky-600 mb-4 flex flex-col items-center"
+                className="focus:outline-none hover:text-sky-600 mb-4 flex w-14 flex-col items-center"
               >
                 {menuItem.icon}
                 <span className="mt-2">{menuItem.label}</span>

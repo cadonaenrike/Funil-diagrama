@@ -76,7 +76,7 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="whitespace-nowrap text-white overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-4/6 flex flex-col justify-evenly"
+      className="whitespace-nowrap text-white overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 h-auto flex flex-col justify-evenly"
     >
       <h2 className="text-lg  mb-2 text-center" draggable="false">
         Arraste os ícones

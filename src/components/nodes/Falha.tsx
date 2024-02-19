@@ -4,14 +4,9 @@ import { Handle, Position } from "reactflow";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
-import sucesso from "../../../public/images/Check.svg";
-import {
-  FaArrowRight,
-  FaCheckCircle,
-  FaEnvelope,
-  FaPhone,
-  FaRegClock,
-} from "react-icons/fa";
+import falha from "../../../public/images/falha.svg";
+import { GoXCircleFill } from "react-icons/go";
+import { FaArrowRight, FaEnvelope, FaPhone, FaRegClock } from "react-icons/fa";
 import ToggleSwitch from "../toggleSwitch/toggleSwitch";
 import { DropDown } from "../dropdawn/DropDawn";
 
@@ -23,7 +18,7 @@ interface SequenciaTimeProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Sucesso({ id, onRemove }: SequenciaTimeProps) {
+export function Falha({ id, onRemove }: SequenciaTimeProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
@@ -88,8 +83,8 @@ export function Sucesso({ id, onRemove }: SequenciaTimeProps) {
           onClick={handleNodeClick}
           onContextMenu={handleNodeClickContext}
         >
-          <section className="w-16 h-14 flex items-center justify-center bg-[#15B408] rounded-lg">
-            <img src={sucesso} width={32} height={32} className="text-white" />
+          <section className="w-16 h-14 flex items-center justify-center bg-[#580909] rounded-lg">
+            <img src={falha} width={32} height={32} className="text-white" />
           </section>
           <span className="font-bold text-center">
             {modalTitle || "Sucesso"}
@@ -144,17 +139,17 @@ export function Sucesso({ id, onRemove }: SequenciaTimeProps) {
           },
         }}
       >
-        <h2 className="text-2xl font-bold mb-4">Sucesso</h2>
+        <h2 className="text-2xl font-bold mb-4">Falha</h2>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
-            A etapa Sucessos filtra para dar continuidade no fluxo apenas os
-            leads que obtiveram o status de sucesso na etapa anterior.
+            A etapa Falhas filtra para dar continuidade no fluxo apenas os leads
+            que obtiveram o status de falha na etapa anterior.
           </label>
         </div>
-        <div className="mb-4 flex justify-center gap-9">
+        <div className="mb-4 flex justify-center items-center gap-9">
           <FaPhone className="rotate-90" />
           <FaArrowRight />
-          <FaCheckCircle className="text-blue-600" />
+          <GoXCircleFill className="text-blue-600" size={25} />
           <FaArrowRight />
           <FaEnvelope />
         </div>

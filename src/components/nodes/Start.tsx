@@ -111,6 +111,7 @@ export function Start({ id, onRemove }: SequenciaWhatsAppProps) {
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
           },
         }}
       >

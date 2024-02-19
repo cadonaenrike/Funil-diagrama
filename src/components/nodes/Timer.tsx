@@ -67,7 +67,8 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
     closeModal();
   };
 
-  const handleRemoveFromScreen = () => {
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     if (onRemove) onRemove(id);
     setIsRemoved(true);
     closeModal();
@@ -145,6 +146,7 @@ export function Timer({ id, onRemove }: SequenciaTimeProps) {
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
           },
         }}
       >

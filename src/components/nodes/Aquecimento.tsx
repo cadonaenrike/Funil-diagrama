@@ -138,6 +138,7 @@ export function Aquecimento() {
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
           },
         }}
       >

@@ -89,6 +89,7 @@ export function Square() {
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.5)",
+            overflow: "auto",
           },
         }}
       >

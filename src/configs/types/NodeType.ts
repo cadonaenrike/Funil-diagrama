@@ -7,13 +7,15 @@ export interface NodeType {
     | "create"
     | "whatsApp"
     | "timer"
+    | "falha"
     | "tag"
     | "seqmista"
     | "seqwhatsapp"
     | "seqsms"
     | "seqemail"
     | "success"
-    | "inicio";
+    | "inicio"
+    | "addTag";
   position: { x: number; y: number };
   data: any;
 }
