@@ -168,24 +168,12 @@ export function AddTag({ id, onRemove }: AddTagProps) {
                 <FaPlus />
               </button>
             </section>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-end -mr-2 mt-4">
               <button
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mr-2"
+                className="px-4 py-2 bg-[#046a04] text-white rounded-md hover:bg-[#227422] focus:outline-none focus:ring focus:border-blue-300 mr-2"
               >
                 Salvar
-              </button>
-              <button
-                onClick={handleRemoveFromScreen}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300 mr-2"
-              >
-                Remover da Tela
-              </button>
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-500"
-              >
-                Fechar
               </button>
             </div>
           </div>
