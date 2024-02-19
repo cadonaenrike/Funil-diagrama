@@ -28,8 +28,10 @@ import check from "../../public/images/Check.svg";
 import start from "../../public/images/Start.svg";
 import aquecimento from "../../public/images/aquecimento.svg";
 import addtag from "../../public/images/addtag.svg";
+import removerTag from "../../public/images/removeTag.svg";
 import falha from "../../public/images/falha.svg";
 import { Falha } from "../components/nodes/Falha";
+import { RemoverTag } from "../components/nodes/RemoverTag";
 
 const node_type = {
   square: Square,
@@ -40,6 +42,7 @@ const node_type = {
   inicio: Start,
   addTag: AddTag,
   falha: Falha,
+  removerTag: RemoverTag,
 };
 
 function WhatsAppFlux() {
@@ -63,6 +66,11 @@ function WhatsAppFlux() {
       label: "Add Tag",
       type: "addTag",
       icon: <img src={addtag} height={25} width={25} />,
+    },
+    {
+      label: "Remover Tag",
+      type: "removerTag",
+      icon: <img src={removerTag} height={25} width={25} />,
     },
     {
       label: "Sucesso",

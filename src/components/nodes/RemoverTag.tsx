@@ -1,23 +1,47 @@
 import { useState } from "react";
 import { Handle, Position } from "reactflow";
-import addTag from "../../../public/images/addTag.svg";
+import removerTag from "../../../public/images/removeTag.svg";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
+import { DropDown } from "../dropdawn/DropDawn";
+import { GoX } from "react-icons/go";
+import { FaPlus } from "react-icons/fa6";
 
 Modal.setAppElement("#root");
 
+interface RemoverTagProps {
+  id: string;
+  onRemove: (nodeId: string) => void;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function RemoverTag() {
+export function RemoverTag({ id, onRemove }: RemoverTagProps) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isDropDown, setDropDown] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedTagName, setSelectedTagName] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const [isModalTag, setModalTag] = useState(false);
 
   const tagsOptions = ["Tag1", "Tag2", "Tag3", "Tag4", "Tag5"];
 
   const handleNodeClick = () => {
     setModalOpen(true);
+  };
+
+  const closeModalTag = () => {
+    setModalTag(!isModalTag);
+  };
+
+  const handleTag = () => {
+    setModalTag(!isModalTag);
+  };
+
+  const handleNodeClickContext = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isRemoved) setDropDown(!isDropDown);
   };
 
   const closeModal = () => {
@@ -39,8 +63,10 @@ export function RemoverTag() {
     closeModal();
   };
 
-  const handleRemoveFromScreen = () => {
+  const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     setIsRemoved(true);
+    if (onRemove) onRemove(id);
     closeModal();
   };
 
@@ -50,9 +76,15 @@ export function RemoverTag() {
         <div
           className="h-50 p-2 rounded flex flex-col items-center text-white"
           onClick={handleNodeClick}
+          onContextMenu={handleNodeClickContext}
         >
-          <section className="w-16 h-14 bg-[#113668] rounded-lg flex items-center justify-center">
-            <img src={addTag} width={32} height={32} className="text-white" />
+          <section className="w-16 h-14 bg-[#7d0909] rounded-lg flex items-center justify-center">
+            <img
+              src={removerTag}
+              width={32}
+              height={32}
+              className="text-white"
+            />
           </section>
           <section>
             <Handle
@@ -69,8 +101,19 @@ export function RemoverTag() {
             />
           </section>
           <span className="font-bold text-center">
-            {selectedTagName || "Adicionar Tag"}
+            {selectedTagName || "Remover Tag"}
           </span>
+          <DropDown
+            isOpen={isDropDown}
+            toggleDropDown={() => setDropDown(!isDropDown)}
+            onClickButton={handleRemoveFromScreen}
+            onClickButtonCopy={() => {
+              console.log("Copiou");
+            }}
+            onClickButtonExport={() => {
+              console.log("Copiou");
+            }}
+          />
         </div>
       )}
       <Modal
@@ -108,39 +151,84 @@ export function RemoverTag() {
             <h3 className="text-lg font-bold mb-2">
               Tag(s) para ser removida(s) no lead
             </h3>
-            <select
-              value={selectedTags[0]}
-              onChange={handleTagChange}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none bg-transparent"
-            >
-              {tagsOptions.map((tag, index) => (
-                <option style={{ background: "black" }} key={index} value={tag}>
-                  {tag}
-                </option>
-              ))}
-            </select>
-            <button>+</button>
-            <div className="flex justify-end mt-4">
+            <section className="w-full flex items-center gap-2 justify-center">
+              <select
+                value={selectedTags[0]}
+                onChange={handleTagChange}
+                className="mt-1 p-2 w-full border rounded-md focus:outline-none bg-transparent"
+              >
+                {tagsOptions.map((tag, index) => (
+                  <option
+                    style={{ background: "black" }}
+                    key={index}
+                    value={tag}
+                  >
+                    {tag}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={handleTag}
+                className="border rounded-md mt-1 py-3 px-7 hover:border-purple-600 hover:bg-purple-700 hover:bg-opacity-5"
+              >
+                <FaPlus />
+              </button>
+            </section>
+            <div className="flex justify-end -mr-2 mt-4">
               <button
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mr-2"
+                className="px-4 py-2 bg-[#046a04] text-white rounded-md hover:bg-[#227422] focus:outline-none focus:ring focus:border-blue-300 mr-2"
               >
                 Salvar
               </button>
-              <button
-                onClick={handleRemoveFromScreen}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300 mr-2"
-              >
-                Remover da Tela
-              </button>
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-500"
-              >
-                Fechar
-              </button>
             </div>
           </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={isModalTag}
+        onRequestClose={closeModalTag}
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "8px",
+            border: "none",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            background: "#070606",
+            padding: "20px",
+            maxWidth: "700px",
+            color: "#FFFFFF",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
+          },
+        }}
+      >
+        <div className="rounded-md gap-7 flex flex-col min-w-[440px] p-2">
+          <section className="flex justify-between items-center w-full">
+            <h2 className="text-xl text-[#a8a8a8]">Criar tag:</h2>
+            <GoX
+              className="cursor-pointer text-2xl hover:bg-[#4b4a4a] rounded-full"
+              onClick={closeModalTag}
+            />
+          </section>
+          <input
+            type="text"
+            placeholder="Nome"
+            className="bg-transparent rounded-md"
+          />
+          <section className="flex justify-end">
+            <button className="bg-[#625cf3] rounded-md py-1 px-4">
+              Salvar
+            </button>
+          </section>
         </div>
       </Modal>
     </>

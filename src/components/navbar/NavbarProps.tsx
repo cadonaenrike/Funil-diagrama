@@ -81,7 +81,7 @@ const NavbarProps: React.FC<NavbarProps> = ({
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className="whitespace-nowrap h-auto text-white overflow-hidden text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 flex flex-col justify-evenly"
+      className="whitespace-nowrap h-auto text-white overflow-auto text-ellipsis fixed top-1/2 transform -translate-y-1/2 bg-black opacity-80 rounded-2xl shadow-lg border border-zinc-300 px-8 w-52 pt-4 flex flex-col justify-evenly"
     >
       <h2
         className="text-lg mb-4 text-center"
@@ -94,9 +94,9 @@ const NavbarProps: React.FC<NavbarProps> = ({
         <div key={index}>
           <div className="flex items-center my-2" draggable="false">
             <div className="w-14 border-t border-zinc-500"></div>
-            <span className="text-center text-xs px-1">
+            <p className="text-center text-xs px-1">
               {configuracaoLinha.nomesLinhas[index]}
-            </span>
+            </p>
             <div className="w-14 border-t border-zinc-500"></div>
           </div>
           <div className="flex items-center justify-center flex-wrap gap-5">
@@ -109,7 +109,9 @@ const NavbarProps: React.FC<NavbarProps> = ({
                 className="focus:outline-none hover:text-sky-600 mb-4 flex w-14 flex-col items-center"
               >
                 {menuItem.icon}
-                <span className="mt-2">{menuItem.label}</span>
+                <p className="mt-2 whitespace-normal w-auto">
+                  {menuItem.label}
+                </p>
               </button>
             ))}
           </div>

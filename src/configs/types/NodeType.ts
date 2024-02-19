@@ -15,7 +15,8 @@ export interface NodeType {
     | "seqemail"
     | "success"
     | "inicio"
-    | "addTag";
+    | "addTag"
+    | "removerTag";
   position: { x: number; y: number };
   data: any;
 }
