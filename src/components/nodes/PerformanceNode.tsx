@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from "react";
-import { FaRegClock } from "react-icons/fa";
+import { FaPlusCircle, FaRegClock } from "react-icons/fa";
 import { Handle, Position } from "reactflow";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -12,6 +12,9 @@ import { DropDown } from "../dropdawn/DropDawn";
 import email from "../../../public/images/email.svg";
 import { MdRoomPreferences } from "react-icons/md";
 import { FaX } from "react-icons/fa6";
+import { Arquivos } from "../blocos/Arquivos";
+import { DropDownBloco } from "../dropdawn/DropDawnBloco";
+import { Botao } from "../blocos/Botao";
 
 Modal.setAppElement("#root");
 
@@ -53,19 +56,55 @@ const initialToggle = {
   toggle5: false,
 };
 
-interface EmailMarketingProps {
+interface PerformanceProps {
   id: string;
   onRemove: (nodeId: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
+export function PerformanceNode({ id, onRemove }: PerformanceProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isModalOpenDominio, setModalOpenDominio] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
   const [isDropdown, setDropdown] = useState(false);
+  const [isBlock, setIsBlock] = useState<JSX.Element[]>([]);
+  const [drop, setDrop] = useState(false);
   const textoCopiar = useRef<HTMLParagraphElement>(null);
   const [toggle, setToggle] = useState<ToggleSwitch>(initialToggle);
+
+  const handleAddButton = () => {
+    setIsBlock((prevBlocks) => [
+      ...prevBlocks,
+      <Botao label={""} backgroundColor={""} />,
+    ]);
+  };
+
+  const handleAddArquivo = () => {
+    setIsBlock((prevBlocks) => [
+      ...prevBlocks,
+      <Arquivos
+        index={prevBlocks.length}
+        moveBlock={moveBlock}
+        blocksLength={prevBlocks.length}
+      />,
+    ]);
+    setDrop(!drop);
+  };
+
+  const handleAddBlock = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setDrop(!drop);
+  };
+
+  const moveBlock = (direction: "up" | "down", index: number) => {
+    setIsBlock((prevBlocks) => {
+      const newBlocks = [...prevBlocks];
+      const temp = newBlocks[index];
+      newBlocks[index] = newBlocks[index + (direction === "up" ? -1 : 1)];
+      newBlocks[index + (direction === "up" ? -1 : 1)] = temp;
+      return newBlocks;
+    });
+  };
 
   const handleNodeClick = () => {
     if (!isRemoved) {
@@ -136,7 +175,7 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
           onClick={handleNodeClick}
           onContextMenu={handleOtherClick}
         >
-          <section className="bg-[#5a3115] rounded-lg w-16 flex items-center h-14 justify-center">
+          <section className="bg-[#9a633b] rounded-lg w-16 flex items-center h-14 justify-center">
             <img src={email} width={32} height={32} className="text-white" />
           </section>
           <section>
@@ -144,16 +183,16 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
               id="right"
               position={Position.Right}
               type="source"
-              className="right-4 w-3 h-3 top-9"
+              className="right-5 w-3 h-3 top-9"
             />
             <Handle
               id="left"
               position={Position.Left}
               type="source"
-              className="left-4 w-3 h-3 top-9"
+              className="left-5 w-3 h-3 top-9"
             />
           </section>
-          <span className="font-bold text-center">Email Marketing</span>
+          <span className="font-bold text-center">Email Performance</span>
           <DropDown
             onClickButtonCopy={() => {
               console.log("clicou");
@@ -192,7 +231,9 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
           },
         }}
       >
-        <h2 className="text-2xl font-bold mb-2">Configurar E-mail Marketing</h2>
+        <h2 className="text-2xl font-bold mb-2">
+          Configurar E-mail Performance
+        </h2>
 
         <section className="flex flex-col">
           <p className="text-lg font-bold">Caixa Postal</p>
@@ -301,6 +342,32 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
               </p>
             </section>
           </div>
+
+          <section className="flex flex-col">
+            <p>Mensagem</p>
+            <div className="w-full flex flex-col gap-2 items-center justify-center border py-9 rounded-lg">
+              {isBlock.map((block, index) => (
+                <div
+                  className="w-full flex justify-center items-center flex-col"
+                  key={index}
+                >
+                  {block}
+                </div>
+              ))}
+              <button
+                onClick={handleAddBlock}
+                className="border bg-transparent rounded-md flex px-7 items-center py-1 gap-2 text-sm"
+              >
+                <FaPlusCircle className="" /> Adicionar bloco
+              </button>
+            </div>
+            <DropDownBloco
+              isOpen={drop}
+              onClickButtonText={handleAddButton}
+              onClickButtonArchiver={handleAddArquivo}
+              toggleDropDown={() => setDrop(false)}
+            />
+          </section>
         </section>
 
         {/* <button className="bg-[#625cf3] w-full py-2 rounded-lg mt-5 font-bold hover:bg-[#6a65f7]">

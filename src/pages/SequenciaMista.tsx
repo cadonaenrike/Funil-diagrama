@@ -22,7 +22,7 @@ import { NodeType } from "../configs/types/NodeType";
 import { Start } from "../components/nodes/Start";
 import { Sucesso } from "../components/nodes/Sucesso";
 import * as React from "react";
-import { FaUser, FaWhatsapp, FaTag } from "react-icons/fa";
+import { FaWhatsapp, FaTag } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import check from "../../public/images/Check.svg";
 import start from "../../public/images/Start.svg";
@@ -38,6 +38,7 @@ import removerTag from "../../public/images/removeTag.svg";
 import falha from "../../public/images/falha.svg";
 import emailMarketing from "../../public/images/email.svg";
 import { EmailMarketing } from "../components/nodes/EmailMarketing";
+import { PerformanceNode } from "../components/nodes/PerformanceNode";
 
 const node_type = {
   falha: Falha,
@@ -53,6 +54,7 @@ const node_type = {
   tag: Tag,
   inicio: Start,
   success: Sucesso,
+  performance: PerformanceNode,
 };
 
 function SequenciaMista() {
@@ -90,7 +92,11 @@ function SequenciaMista() {
       type: "emailmarketing",
       icon: <img src={emailMarketing} width={25} height={25} />,
     },
-    { label: "Leads", type: "create", icon: <FaUser /> },
+    {
+      label: "Performance",
+      type: "performance",
+      icon: <img src={emailMarketing} width={25} height={25} />,
+    },
     {
       label: "Add Tag",
       type: "addTag",
@@ -146,6 +152,10 @@ function SequenciaMista() {
       ),
       aquecimento: (props: NodeProps) => (
         <Aquecimento {...props} onRemove={removeNode} />
+      ),
+
+      performance: (props: NodeProps) => (
+        <PerformanceNode {...props} onRemove={removeNode} />
       ),
     }),
     [removeNode]

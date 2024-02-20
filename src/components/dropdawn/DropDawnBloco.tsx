@@ -4,8 +4,8 @@ import { FaFileAlt } from "react-icons/fa";
 
 interface DropDownProps {
   isOpen: boolean;
-  onClickButtonArchiver: (e: React.MouseEvent<HTMLElement>) => void;
-  onClickButtonText: (e: React.MouseEvent<HTMLElement>) => void;
+  onClickButtonArchiver?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClickButtonText?: (e: React.MouseEvent<HTMLElement>) => void;
   toggleDropDown: () => void;
 }
 
@@ -49,20 +49,23 @@ export function DropDownBloco({
           aria-labelledby="options-menu"
         >
           {/* Conteúdo do dropdown aqui */}
-          <div className="py-1 flex items-center flex-col justify-center" role="none">
+          <div
+            className="py-1 flex items-center flex-col justify-center"
+            role="none"
+          >
             <button
               className=" py-2 gap-2 flex items-center text-sm hover:bg-[#00000021] rounded-lg"
               onClick={onClickButtonText}
               role="menuitem"
             >
-              <BsChatRightTextFill  /> Texto
+              <BsChatRightTextFill /> Texto
             </button>
             <button
               onClick={onClickButtonArchiver}
               className="py-2 flex items-center gap-2 text-sm hover:bg-[#00000021] rounded-lg"
               role="menuitem"
             >
-              <FaFileAlt  /> Arquivo
+              <FaFileAlt /> Arquivo
             </button>
           </div>
         </div>

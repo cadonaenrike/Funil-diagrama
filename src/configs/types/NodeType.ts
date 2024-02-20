@@ -10,6 +10,7 @@ export interface NodeType {
     | "falha"
     | "tag"
     | "seqmista"
+    | "performance"
     | "seqwhatsapp"
     | "emailmarketing"
     | "seqsms"
