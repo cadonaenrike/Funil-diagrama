@@ -10,6 +10,8 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import ToggleSwitch from "../toggleSwitch/toggleSwitch";
 import { DropDown } from "../dropdawn/DropDawn";
 import email from "../../../public/images/email.svg";
+import { MdRoomPreferences } from "react-icons/md";
+import { FaX } from "react-icons/fa6";
 
 Modal.setAppElement("#root");
 
@@ -24,6 +26,23 @@ interface ToggleSwitch {
 const emailOption = [
   { id: "1", email: "test@example.com" },
   { id: "2", email: "test2@example.com" },
+];
+
+const typeDominio = [
+  {
+    id: "1",
+    dominio: "dominio.online",
+    tipo: "site",
+    email: "E-mail 10/900.000",
+  },
+  {
+    id: "2",
+    dominio: "dominio2.online",
+    tipo: "site",
+    email: "E-mail 150.000/900.000",
+  },
+  { id: "3", dominio: "dominio.offline", tipo: "site", email: "email" },
+  { id: "4", dominio: "dominio2.offline", tipo: "site", email: "email" },
 ];
 
 const initialToggle = {
@@ -42,6 +61,7 @@ interface EmailMarketingProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpenDominio, setModalOpenDominio] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
   const [isDropdown, setDropdown] = useState(false);
   const textoCopiar = useRef<HTMLParagraphElement>(null);
@@ -51,6 +71,14 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
     if (!isRemoved) {
       setModalOpen(true);
     }
+  };
+
+  const handleDominio = () => {
+    setModalOpenDominio(!isModalOpenDominio);
+  };
+
+  const closeDominio = () => {
+    setModalOpenDominio(!isModalOpenDominio);
   };
 
   const copyText = (texto: string) => {
@@ -191,6 +219,13 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
             ))}
           </select>
 
+          <button
+            onClick={handleDominio}
+            className="bg-[#625cf3] flex items-center justify-center gap-2 w-full py-2 rounded-lg mb-5 font-bold hover:bg-[#6a65f7]"
+          >
+            <MdRoomPreferences size={19} /> GERENCIAR CAIXAS POSTAIS
+          </button>
+
           <p className="text-lg font-bold">Assunto do e-mail</p>
           <span className="text-sm text-gray-600 font-normal">
             O campo abaixo se refere ao assunto do e-mail que o lead receberá no
@@ -268,9 +303,9 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
           </div>
         </section>
 
-        <button className="bg-[#625cf3] w-full py-2 rounded-lg mt-5 font-bold hover:bg-[#6a65f7]">
+        {/* <button className="bg-[#625cf3] w-full py-2 rounded-lg mt-5 font-bold hover:bg-[#6a65f7]">
           CLIQUE AQUI PARA EDITAR SEU E-MAIL
-        </button>
+        </button> */}
 
         <section className="bg-[#071318] rounded-lg flex flex-col px-3 py-3 gap-3 mt-7">
           <section className="flex gap-3 relative">
@@ -306,6 +341,117 @@ export function EmailMarketing({ id, onRemove }: EmailMarketingProps) {
           </button>
         </div>
       </Modal>
+
+      {/* Modal dominios de email(caixa-postal) */}
+      <Modal
+        isOpen={isModalOpenDominio}
+        onRequestClose={closeDominio}
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "8px",
+            border: "none",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            background: "#000000",
+            padding: "20px",
+            maxWidth: "700px",
+            color: "#FFFFFF",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
+          },
+        }}
+      >
+        <div className="w-[440px] rounded-lg">
+          <section className="flex items-center justify-between">
+            <h2>Selecione um domínio</h2>{" "}
+            <FaX
+              onClick={closeDominio}
+              className="cursor-pointer hover:bg-gray-800 hover:border-gray-800 hover:border-2 rounded-full"
+            />
+          </section>
+          <section className="flex flex-wrap gap-4 mt-5">
+            {typeDominio.map((d) => (
+              <section
+                key={d.id}
+                className="flex flex-col border rounded-md w-[200px] p-2 cursor-pointer hover:bg-[#262626]"
+              >
+                <p>{d.dominio}</p>
+                <section className="flex items-center gap-2 ">
+                  <span
+                    className={`text-xs rounded-md px-1 ${
+                      d.email === "email" ? "bg-gray-600" : "bg-[#b04b1d]"
+                    }`}
+                  >
+                    {d.email}
+                  </span>
+                  <span className="text-xs bg-gray-600 rounded-md px-1">
+                    {d.tipo}
+                  </span>
+                </section>
+              </section>
+            ))}
+          </section>
+        </div>
+      </Modal>
+
+      {/* Modal caixas postais*/}
+
+      <Modal
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "8px",
+            border: "none",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            background: "#000000",
+            padding: "20px",
+            maxWidth: "700px",
+            color: "#FFFFFF",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
+          },
+        }}
+      ></Modal>
+
+      {/* MOdal nova caixa postal */}
+
+      <Modal
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "8px",
+            border: "none",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            background: "#000000",
+            padding: "20px",
+            maxWidth: "700px",
+            color: "#FFFFFF",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.767)",
+            overflow: "auto",
+          },
+        }}
+      ></Modal>
     </>
   );
 }
