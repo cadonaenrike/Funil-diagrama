@@ -99,7 +99,7 @@ const NavbarProps: React.FC<NavbarProps> = ({
             </p>
             <div className="w-14 border-t border-zinc-500"></div>
           </div>
-          <div className="flex items-center justify-center flex-wrap gap-5">
+          <div className="flex items-start justify-center flex-wrap gap-5">
             {pair.map((menuItem) => (
               <button
                 draggable

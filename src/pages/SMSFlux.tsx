@@ -4,6 +4,7 @@ import ReactFlow, {
   Connection,
   ConnectionMode,
   Controls,
+  NodeProps,
   addEdge,
   useEdgesState,
   useNodesState,
@@ -22,14 +23,22 @@ import { Start } from "../components/nodes/Start";
 import { Sucesso } from "../components/nodes/Sucesso";
 import * as React from "react";
 import NavbarProps from "../components/navbar/NavbarProps";
-import { FaUser, FaWhatsapp, FaTag } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import check from "../../public/images/Check.svg";
 import start from "../../public/images/Start.svg";
 import { SMS } from "../components/nodes/SMS";
+import { AddTag } from "../components/nodes/AddTag";
+import { RemoverTag } from "../components/nodes/RemoverTag";
 import sms from "../../public/images/sms.svg";
+import aquecimento from "../../public/images/aquecimento.svg";
+import addtag from "../../public/images/addTag.svg";
+import removertag from "../../public/images/removeTag.svg";
+import falha from "../../public/images/falha.svg";
+import tag from "../../public/images/tag.svg";
+import { Falha } from "../components/nodes/Falha";
 
 const node_type = {
+  falha: Falha,
   sms: SMS,
   square: Square,
   create: Create,
@@ -37,6 +46,8 @@ const node_type = {
   whatsApp: WhatsApp,
   timer: Timer,
   tag: Tag,
+  addTag: AddTag,
+  removerTag: RemoverTag,
   inicio: Start,
   success: Sucesso,
 };
@@ -59,19 +70,41 @@ function SMSFlux() {
       type: "inicio",
       icon: <img src={start} className="invert" width={25} height={25} />,
     },
+    { label: "Timer", type: "timer", icon: <TfiTimer size={25} /> },
+    {
+      label: "Aquecimento",
+      type: "aquecimento",
+      icon: <img src={aquecimento} height={25} width={25} />,
+    },
     {
       label: "SMS",
       type: "sms",
       icon: <img src={sms} width={25} height={25} />,
     },
-    { label: "Leads", type: "create", icon: <FaUser /> },
-    { label: "WhatsApp", type: "whatsApp", icon: <FaWhatsapp /> },
-    { label: "Timer", type: "timer", icon: <TfiTimer /> },
-    { label: "Tag", type: "tag", icon: <FaTag /> },
+    {
+      label: "Add Tag",
+      type: "addTag",
+      icon: <img src={addtag} height={25} width={25} />,
+    },
+    {
+      label: "Remover Tag",
+      type: "removerTag",
+      icon: <img src={removertag} height={25} width={25} />,
+    },
     {
       label: "Sucesso",
       type: "success",
       icon: <img src={check} height={25} width={25} />,
+    },
+    {
+      label: "Falha",
+      type: "falha",
+      icon: <img src={falha} height={25} width={25} />,
+    },
+    {
+      label: "Tag",
+      type: "tag",
+      icon: <img src={tag} height={25} width={25} />,
     },
   ];
 
@@ -105,6 +138,43 @@ function SMSFlux() {
     onMenuItemClick(type as NodeType["type"], newPosition);
   };
 
+  const removeNode = useCallback(
+    (nodeId: string) => {
+      setNodes((prevNodes) => prevNodes.filter((node) => node.id !== nodeId));
+      setEdges((prevEdges) =>
+        prevEdges.filter(
+          (edge) => edge.source !== nodeId && edge.target !== nodeId
+        )
+      );
+    },
+    [setNodes, setEdges]
+  );
+
+  const memoizedNodeTypes = React.useMemo(
+    () => ({
+      ...node_type,
+      timer: (props: NodeProps) => <Timer {...props} onRemove={removeNode} />,
+      tag: (props: NodeProps) => <Tag {...props} onRemove={removeNode} />,
+      whatsApp: (props: NodeProps) => (
+        <WhatsApp {...props} onRemove={removeNode} />
+      ),
+      addTag: (props: NodeProps) => <AddTag {...props} onRemove={removeNode} />,
+      removerTag: (props: NodeProps) => (
+        <RemoverTag {...props} onRemove={removeNode} />
+      ),
+      success: (props: NodeProps) => (
+        <Sucesso {...props} onRemove={removeNode} />
+      ),
+      falha: (props: NodeProps) => <Falha {...props} onRemove={removeNode} />,
+      sms: (props: NodeProps) => <SMS {...props} onRemove={removeNode} />,
+      aquecimento: (props: NodeProps) => (
+        <Aquecimento {...props} onRemove={removeNode} />
+      ),
+      inicio: (props: NodeProps) => <Start {...props} onRemove={removeNode} />,
+    }),
+    [removeNode]
+  );
+
   return (
     <div
       className="w-screen h-screen"
@@ -112,7 +182,7 @@ function SMSFlux() {
       onDragOver={handleNodeDragOver}
     >
       <ReactFlow
-        nodeTypes={node_type}
+        nodeTypes={memoizedNodeTypes}
         nodes={nodes}
         edges={edges}
         onEdgesChange={onEdgesChange}

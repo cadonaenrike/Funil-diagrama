@@ -82,7 +82,7 @@ const NavbarHome: React.FC<NavbarProps> = ({ onMenuItemClick }) => {
         Arraste os ícones
       </h2>
       <div className="grid grid-cols-1 items-center justify-center">
-        <section className="flex items-center justify-center ">
+        <section className="flex items-start justify-center ">
           {timer.map((item) => (
             <button
               key={item.type}
