@@ -13,6 +13,7 @@ export interface NodeType {
     | "performance"
     | "seqwhatsapp"
     | "emailmarketing"
+    | "lidos"
     | "seqsms"
     | "sms"
     | "seqemail"

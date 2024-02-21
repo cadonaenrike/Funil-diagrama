@@ -35,7 +35,7 @@ export function SequenciaEmail({ id, onRemove }: SequenciaEmailProps) {
   };
 
   const handleNodeClick = () => {
-    navigator("/SequenciaEmail");
+    navigator("/EmailFlux");
   };
 
   const handleRemoveFromScreen = (e: React.MouseEvent<HTMLElement>) => {
