@@ -1,41 +1,47 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { Handle, Position } from "reactflow";
 import removerTag from "../../../public/images/removeTag.svg";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import Modal from "react-modal";
 import { DropDown } from "../dropdawn/DropDawn";
-import { GoX } from "react-icons/go";
 import { FaPlus } from "react-icons/fa6";
+import { TagsType } from "../../types/TagsType";
+import { getAllTags } from "../../services/TagsService";
 
 Modal.setAppElement("#root");
 
 interface RemoverTagProps {
   id: string;
   onRemove: (nodeId: string) => void;
+  onUpdateNode: (id: string, data: any) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function RemoverTag({ id, onRemove }: RemoverTagProps) {
+export function RemoverTag({ id, onRemove, onUpdateNode }: RemoverTagProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isDropDown, setDropDown] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedTagName, setSelectedTagName] = useState("");
+  const [tagsOptions, setTagsOptions] = useState<TagsType[]>([]);
   const [isRemoved, setIsRemoved] = useState(false);
-  const [isModalTag, setModalTag] = useState(false);
+  const apiFront = import.meta.env.VITE_APY_FRONT;
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const allTags = await getAllTags();
+        setTagsOptions(allTags);
+      } catch (error) {
+        console.error("Erro ao obter as tags:", error);
+      }
+    };
 
-  const tagsOptions = ["Tag1", "Tag2", "Tag3", "Tag4", "Tag5"];
+    fetchTags();
+  }, []);
 
   const handleNodeClick = () => {
     setModalOpen(true);
-  };
-
-  const closeModalTag = () => {
-    setModalTag(!isModalTag);
-  };
-
-  const handleTag = () => {
-    setModalTag(!isModalTag);
   };
 
   const handleNodeClickContext = (e: React.MouseEvent<HTMLElement>) => {
@@ -55,11 +61,7 @@ export function RemoverTag({ id, onRemove }: RemoverTagProps) {
   };
 
   const handleSave = () => {
-    console.log("Tags Selecionadas:", selectedTags);
-    console.log("Nome da Tag Selecionada:", selectedTagName);
-
-    // Atualize o nome da tag no seu estado ou faça outras ações necessárias
-
+    onUpdateNode(id, { tags: selectedTags, tagName: selectedTagName });
     closeModal();
   };
 
@@ -161,18 +163,17 @@ export function RemoverTag({ id, onRemove }: RemoverTagProps) {
                   <option
                     style={{ background: "black" }}
                     key={index}
-                    value={tag}
+                    value={tag.name}
                   >
-                    {tag}
+                    {tag.name}
                   </option>
                 ))}
               </select>
-              <button
-                onClick={handleTag}
-                className="border rounded-md mt-1 py-3 px-7 hover:border-purple-600 hover:bg-purple-700 hover:bg-opacity-5"
-              >
-                <FaPlus />
-              </button>
+              <a href={`${apiFront}/CLIENTE/RelacaoDeTags-Client`}>
+                <button className="border rounded-md mt-1 py-3 px-7 hover:border-purple-600 hover:bg-purple-700 hover:bg-opacity-5">
+                  <FaPlus />
+                </button>
+              </a>
             </section>
             <div className="flex justify-end -mr-2 mt-4">
               <button
@@ -183,52 +184,6 @@ export function RemoverTag({ id, onRemove }: RemoverTagProps) {
               </button>
             </div>
           </div>
-        </div>
-      </Modal>
-
-      <Modal
-        isOpen={isModalTag}
-        onRequestClose={closeModalTag}
-        style={{
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            borderRadius: "8px",
-            border: "none",
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            background: "#070606",
-            padding: "20px",
-            maxWidth: "700px",
-            color: "#FFFFFF",
-          },
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.767)",
-            overflow: "auto",
-          },
-        }}
-      >
-        <div className="rounded-md gap-7 flex flex-col min-w-[440px] p-2">
-          <section className="flex justify-between items-center w-full">
-            <h2 className="text-xl text-[#a8a8a8]">Criar tag:</h2>
-            <GoX
-              className="cursor-pointer text-2xl hover:bg-[#4b4a4a] rounded-full"
-              onClick={closeModalTag}
-            />
-          </section>
-          <input
-            type="text"
-            placeholder="Nome"
-            className="bg-transparent rounded-md"
-          />
-          <section className="flex justify-end">
-            <button className="bg-[#625cf3] rounded-md py-1 px-4">
-              Salvar
-            </button>
-          </section>
         </div>
       </Modal>
     </>

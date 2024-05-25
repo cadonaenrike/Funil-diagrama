@@ -1,11 +1,12 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import WhatsAppFlux from "../pages/WhatsAppFlux";
+
 import Home from "../pages/Home";
 import SMSFlux from "../pages/SMSFlux";
 import SequenciaMista from "../pages/SequenciaMista";
 import EmailFlux from "../pages/EmailFlux";
 import FluxoPage from "../pages/EditFluxo";
+import WhatsAppFlux from "../pages/WhatsAppFlux";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },

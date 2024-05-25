@@ -72,7 +72,7 @@ const NavbarProps: React.FC<NavbarProps> = ({
       "Condições",
       "Integrar",
       "Extras",
-    ], // Definir os nomes para cada linha
+    ],
   };
 
   const pares = gerarPares(configuracaoLinha);
@@ -118,6 +118,7 @@ const NavbarProps: React.FC<NavbarProps> = ({
         </div>
       ))}
       <hr />
+      
       <img draggable={false} src={logoFunnel} alt="" />
     </div>
   );

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback } from "react";
 import ReactFlow, {
   Background,
   Connection,
@@ -37,6 +38,8 @@ import addTag from "../../public/images/addTag.svg";
 import { Pasta } from "../types/PastaType";
 import { getPastaByIdUser } from "../services/PastaService";
 import { saveFluxo } from "../services/FluxoService";
+import Modal from "../components/saveModal/SaveModal";
+import * as React from "react";
 
 const node_type = {
   square: Square,
@@ -58,24 +61,24 @@ const WhatsAppFlux: React.FC = () => {
   const [fluxoName, setFluxoName] = useState("");
   const [userId, setUserId] = useState("");
   const [selectedPasta, setSelectedPasta] = useState<string>("");
-  const [pasta, setPasta] = useState<Pasta | null>(null);
-
+  const [pastas, setPastas] = useState<Pasta[]>([]);
+  const apiFront = import.meta.env.VITE_APY_FRONT;
   const { userId: userIdFromParams } = useParams<{ userId: string }>();
 
   useEffect(() => {
     if (userIdFromParams) {
       setUserId(userIdFromParams);
 
-      const fetchPasta = async () => {
+      const fetchPastas = async () => {
         try {
           const data = await getPastaByIdUser(userIdFromParams);
-          setPasta(data);
+          setPastas(data);
         } catch (error) {
-          console.error("Erro ao carregar pasta:", error);
+          console.error("Erro ao carregar pastas:", error);
         }
       };
 
-      fetchPasta();
+      fetchPastas();
     }
   }, [userIdFromParams]);
 
@@ -108,6 +111,14 @@ const WhatsAppFlux: React.FC = () => {
     },
     [setNodes, setEdges]
   );
+
+  const updateNodeData = useCallback((id: string, data: any) => {
+    setNodes((prevNodes) =>
+      prevNodes.map((node) =>
+        node.id === id ? { ...node, data: { ...node.data, ...data } } : node
+      )
+    );
+  }, []);
 
   const menuItems = [
     {
@@ -155,11 +166,25 @@ const WhatsAppFlux: React.FC = () => {
       timer: (props: NodeProps) => <Timer {...props} onRemove={removeNode} />,
       tag: (props: NodeProps) => <Tag {...props} onRemove={removeNode} />,
       whatsApp: (props: NodeProps) => (
-        <WhatsApp {...props} onRemove={removeNode} />
+        <WhatsApp
+          {...props}
+          onRemove={removeNode}
+          onUpdateNode={updateNodeData}
+        />
       ),
-      addTag: (props: NodeProps) => <AddTag {...props} onRemove={removeNode} />,
+      addTag: (props: NodeProps) => (
+        <AddTag
+          {...props}
+          onRemove={removeNode}
+          onUpdateNode={updateNodeData}
+        />
+      ),
       removerTag: (props: NodeProps) => (
-        <RemoverTag {...props} onRemove={removeNode} />
+        <RemoverTag
+          {...props}
+          onRemove={removeNode}
+          onUpdateNode={updateNodeData}
+        />
       ),
       success: (props: NodeProps) => (
         <Sucesso {...props} onRemove={removeNode} />
@@ -169,7 +194,7 @@ const WhatsAppFlux: React.FC = () => {
         <Aquecimento {...props} onRemove={removeNode} />
       ),
     }),
-    [removeNode]
+    [removeNode, updateNodeData]
   );
 
   const onConnect = useCallback(
@@ -232,80 +257,28 @@ const WhatsAppFlux: React.FC = () => {
           position="bottom-right"
         />
       </ReactFlow>
+      <div className="fixed top-4 right-4 px-4 flex justify-center items-center gap-4">
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-[#046a04] text-white px-4 py-2 rounded-lg"
+        >
+          Salvar
+        </button>
+        <button className=" px-4 py-2 bg-red-900 text-white rounded-lg ">
+          <a href={`${apiFront}/CLIENTE/RelacaoDePasta-Client`}>Sair</a>
+        </button>
+      </div>
 
-      <button
-        onClick={() => setShowModal(true)}
-        className="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Salvar
-      </button>
-
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-            <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div className="sm:flex sm:items-start">
-                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Salvar Fluxo
-                  </h3>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Preencha os detalhes abaixo para salvar o fluxo.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4">
-                <label
-                  htmlFor="fluxoName"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Nome do Fluxo
-                </label>
-                <input
-                  type="text"
-                  id="fluxoName"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
-                  value={fluxoName}
-                  onChange={(e) => setFluxoName(e.target.value)}
-                />
-              </div>
-              <div className="mt-4">
-                <label
-                  htmlFor="pasta"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Pasta
-                </label>
-                <select
-                  id="pasta"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
-                  value={selectedPasta}
-                  onChange={(e) => setSelectedPasta(e.target.value)}
-                >
-                  <option value="">Selecione uma pasta</option>
-                  {pasta && <option value={pasta.id}>{pasta.name}</option>}
-                </select>
-              </div>
-            </div>
-            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-              <button
-                onClick={handleSave}
-                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-              >
-                Salvar
-              </button>
-              <button
-                onClick={() => setShowModal(false)}
-                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSave={handleSave}
+        fluxoName={fluxoName}
+        setFluxoName={setFluxoName}
+        selectedPasta={selectedPasta}
+        setSelectedPasta={setSelectedPasta}
+        pastas={pastas}
+      />
 
       <NavbarProps menuItems={menuItems} onMenuItemClick={onMenuItemClick} />
     </div>

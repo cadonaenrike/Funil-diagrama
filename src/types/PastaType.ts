@@ -14,5 +14,5 @@ export interface Pasta {
   id: string;
   userid: string;
   name: string;
-  campanhas: Campanha[];
+  campanhas?: Campanha[];
 }

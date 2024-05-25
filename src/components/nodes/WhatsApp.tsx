@@ -1,52 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef, useState } from "react";
-import { FaPlusCircle, FaRegClock, FaWhatsapp } from "react-icons/fa";
-import { BsThreeDots } from "react-icons/bs";
-import { Handle, Position } from "reactflow";
+import { useState } from "react";
+import { FaWhatsapp } from "react-icons/fa";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
+import { Handle, Position, NodeProps } from "reactflow";
 import Modal from "react-modal";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import ToggleSwitch from "../toggleSwitch/toggleSwitch";
-import { DropDownBloco } from "../dropdawn/DropDawnBloco";
-import { Texto } from "../blocos/Texto";
-import { Arquivos } from "../blocos/Arquivos";
+
 import { DropDown } from "../dropdawn/DropDawn";
 
 Modal.setAppElement("#root");
 
-interface ToggleSwitch {
-  toggle1: boolean;
-  toggle2: boolean;
-  toggle3: boolean;
-  toggle4: boolean;
-  toggle5: boolean;
-}
-
-const initialToggle = {
-  toggle1: false,
-  toggle2: false,
-  toggle3: false,
-  toggle4: false,
-  toggle5: false,
-};
-
-interface WhatsAppProps {
+interface WhatsAppProps extends NodeProps {
   id: string;
   onRemove: (nodeId: string) => void;
+  onUpdateNode: (id: string, data: any) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function WhatsApp({ id, onRemove }: WhatsAppProps) {
+export function WhatsApp({ id, data, onRemove, onUpdateNode }: WhatsAppProps) {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [attachment, setAttachment] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(data.phoneNumber || "");
+  const [message, setMessage] = useState(data.message || "");
+  const [image, setImage] = useState<string | null>(null);
+  const [audio, setAudio] = useState<string | null>(null);
   const [isRemoved, setIsRemoved] = useState(false);
   const [isDropdown, setDropdown] = useState(false);
-  const [drop, setDrop] = useState(false);
-  const [isBlock, setIsBlock] = useState<JSX.Element[]>([]);
-  const textoCopiar = useRef<HTMLParagraphElement>(null);
-  const [toggle, setToggle] = useState<ToggleSwitch>(initialToggle);
 
   const handleNodeClick = () => {
     if (!isRemoved) {
@@ -54,59 +31,10 @@ export function WhatsApp({ id, onRemove }: WhatsAppProps) {
     }
   };
 
-  const handleAddText = () => {
-    setIsBlock((prevBlocks) => [...prevBlocks, <Texto />]);
-    setDrop(!drop);
-  };
-
-  const handleAddArquivo = () => {
-    setIsBlock((prevBlocks) => [
-      ...prevBlocks,
-      <Arquivos
-        index={prevBlocks.length}
-        moveBlock={moveBlock}
-        blocksLength={prevBlocks.length}
-      />,
-    ]);
-    setDrop(!drop);
-  };
-
-  const moveBlock = (direction: "up" | "down", index: number) => {
-    setIsBlock((prevBlocks) => {
-      const newBlocks = [...prevBlocks];
-      const temp = newBlocks[index];
-      newBlocks[index] = newBlocks[index + (direction === "up" ? -1 : 1)];
-      newBlocks[index + (direction === "up" ? -1 : 1)] = temp;
-      return newBlocks;
-    });
-  };
-
-  const handleAddBlock = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    setDrop(!drop);
-  };
-
-  const copyText = (texto: string) => {
-    navigator.clipboard
-      .writeText(texto)
-      .then(() => {
-        console.log("Texto copiado", texto);
-      })
-      .catch((error) => {
-        console.error("Erro ao copiar", error);
-      });
-  };
-
-  const handleNomeClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-    const texto = e.currentTarget.textContent || "";
-    copyText(texto);
-  };
-
   const handleOtherClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!isRemoved) {
-      // Abrir o modal quando o nó for clicado
       setDropdown(!isDropdown);
     }
   };
@@ -115,20 +43,45 @@ export function WhatsApp({ id, onRemove }: WhatsAppProps) {
     setModalOpen(false);
   };
 
-  const handleToggleChange = (toggleName: string) => {
-    setToggle((prevToggles: any) => ({
-      ...prevToggles,
-      [toggleName]: !prevToggles[toggleName],
-    }));
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(e.target.value);
   };
 
-  const handleAttachmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAttachment(e.target.value);
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
   };
 
-  const handleSend = () => {
-    console.log("Anexo:", attachment);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
+  const handleAudioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAudio(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = () => {
+    const data = {
+      phoneNumber,
+      message,
+      image,
+      audio,
+    };
+    onUpdateNode(id, data);
+    console.log(data);
     closeModal();
   };
 
@@ -204,176 +157,52 @@ export function WhatsApp({ id, onRemove }: WhatsAppProps) {
         }}
       >
         <h2 className="text-2xl font-bold mb-2">Configurar WhatsApp</h2>
-        <div className="bg-[#071318] p-4 rounded-lg flex gap-3">
-          <IoIosInformationCircleOutline size={28} className="text-[#2293C7]" />
-          <section>
-            <h2>Escritas Automáticas</h2>
-            <p className="text-sm mb-4">
-              Em sua mensagem você pode utilizar as seguintes escritas
-              automáticas, para utilizar as informações dos leads com
-              preenchimento automático.
-              <br />
-              <span
-                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
-                ref={textoCopiar}
-                onClick={handleNomeClick}
-              >
-                &#123;&#123;nome&#125;&#125;
-              </span>
-              <span
-                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
-                ref={textoCopiar}
-                onClick={handleNomeClick}
-              >
-                &#123;&#123;pix&#125;&#125;
-              </span>
-              <span
-                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
-                ref={textoCopiar}
-                onClick={handleNomeClick}
-              >
-                &#123;&#123;boleto&#125;&#125;
-              </span>
-              <span
-                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
-                ref={textoCopiar}
-                onClick={handleNomeClick}
-              >
-                &#123;&#123;telefone&#125;&#125;
-              </span>
-              <span
-                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
-                ref={textoCopiar}
-                onClick={handleNomeClick}
-              >
-                &#123;&#123;email&#125;&#125;
-              </span>
-              <span
-                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
-                ref={textoCopiar}
-                onClick={handleNomeClick}
-              >
-                &#123;&#123;primero_nome&#125;&#125;
-              </span>
-              <span
-                className="bg-[#2F393D] px-2 py-1 rounded-xl cursor-pointer"
-                ref={textoCopiar}
-                onClick={handleNomeClick}
-              >
-                &#123;&#123;rastreamento&#125;&#125;
-              </span>
-            </p>
-          </section>
-        </div>
-
-        <section className="flex flex-col">
-          <p>Mensagem</p>
-          <div className="w-full flex flex-col gap-2 items-center justify-center border py-9 rounded-lg">
-            {isBlock.map((block, index) => (
-              <div
-                className="w-full flex justify-center items-center flex-col"
-                key={index}
-              >
-                {block}
-              </div>
-            ))}
-            <button
-              onClick={handleAddBlock}
-              className="border bg-transparent rounded-md flex px-7 items-center py-1 gap-2 text-sm"
-            >
-              <FaPlusCircle className="" /> Adicionar bloco
-            </button>
-          </div>
-          <DropDownBloco
-            isOpen={drop}
-            onClickButtonText={handleAddText}
-            onClickButtonArchiver={handleAddArquivo}
-            toggleDropDown={() => setDrop(false)}
-          />
-        </section>
-
-        <section className="bg-[#071318] rounded-lg flex flex-col px-3 py-3 gap-3 mt-7">
-          <section className="flex gap-3 relative">
-            <FaRegClock className="text-cyan-600 text-xl" />
-            <section>
-              <h2>Agendar data e hora limite?</h2>
-              <span className="text-xs">
-                A etapa vai enviar as mensagens aos leads até uma data e hora
-                determinada.
-              </span>
-            </section>
-            <section className="absolute right-0">
-              <ToggleSwitch
-                toggle={toggle.toggle1}
-                setToggle={() => handleToggleChange("toggle1")}
-              />
-            </section>
-          </section>
-          {toggle.toggle1 && (
-            <input
-              type="datetime-local"
-              className="bg-transparent rounded-lg"
-            />
-          )}
-        </section>
-
-        <section className="bg-[#071318] rounded-lg flex flex-col px-3 py-3 gap-3 mt-7">
-          <section className="flex gap-3 w-full relative">
-            <BsThreeDots className="text-cyan-600 text-xl" />
-            <section>
-              <h2>Agendar um intervalo de tempo?</h2>
-              <span className="text-xs">
-                A etapa vai enviar as mensagens aos leads somente no intervalo
-                de tempo definido abaixo.
-              </span>
-            </section>
-            <section className="absolute right-0">
-              <ToggleSwitch
-                toggle={toggle.toggle2}
-                setToggle={() => handleToggleChange("toggle2")}
-              />
-            </section>
-          </section>
-          {toggle.toggle2 && (
-            <section className="flex ml-8 gap-5">
-              <section className="flex flex-col">
-                <label htmlFor="inicia" className="text-base">
-                  Inicar às:
-                </label>
-                <input
-                  type="time"
-                  name="inicia"
-                  className="bg-transparent rounded-lg"
-                />
-              </section>
-              <section className="flex flex-col">
-                <label htmlFor="termina" className="text-base">
-                  Terminar às:
-                </label>
-                <input
-                  type="time"
-                  name="termina"
-                  className="bg-transparent rounded-lg"
-                />
-              </section>
-            </section>
-          )}
-        </section>
-
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
-            Anexar arquivo:
+            Número de Telefone:
+          </label>
+          <input
+            type="text"
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500 text-black"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Mensagem:
+          </label>
+          <textarea
+            value={message}
+            onChange={handleMessageChange}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500 text-black"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Anexar Imagem:
           </label>
           <input
             type="file"
-            value={attachment}
-            onChange={handleAttachmentChange}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500 text-black"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Anexar Áudio:
+          </label>
+          <input
+            type="file"
+            accept="audio/*"
+            onChange={handleAudioChange}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-500 text-black"
           />
         </div>
         <div className="flex space-x-4 mt-4">
           <button
-            onClick={handleSend}
+            onClick={handleSave}
             className="px-4 py-2 bg-[#046a04] text-white rounded-md hover:bg-[#379737] focus:outline-none focus:ring focus:border-blue-300"
           >
             Salvar

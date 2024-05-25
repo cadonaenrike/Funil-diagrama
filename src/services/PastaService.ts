@@ -1,13 +1,13 @@
-import { Pasta } from "../types/PastaType";
-import api from "./api";
+// services/PastaService.ts
+import api from './api';
+import { Pasta } from '../types/PastaType';
 
-export const getPastaByIdUser = async (idUser: string): Promise<Pasta> => {
+export const getPastaByIdUser = async (userId: string): Promise<Pasta[]> => {
   try {
-    const response = await api.get<Pasta>(`/getIdUserPasta/${idUser}`);
-    console.log(response.data);
+    const response = await api.get<Pasta[]>(`/getIdUserPasta/${userId}`);
     return response.data;
   } catch (error) {
-    console.error("Erro ao obter pasta:", error);
-    throw error; // Ou retorne um valor de erro adequado
+    console.error("Erro ao carregar pastas:", error);
+    throw error;
   }
 };
